@@ -11,18 +11,26 @@ import 'package:llavero/app.dart';
 import 'package:llavero/core/app_scope.dart';
 import 'package:llavero/core/theme/app_typography.dart';
 
+import 'support/memory_secure_value_store.dart';
+
 void main() {
-  testWidgets('shows the Spanish placeholder with the light theme', (
+  testWidgets('shows Spanish onboarding with the light theme', (
     WidgetTester tester,
   ) async {
+    final controllers = AppControllers(secureValues: MemorySecureValueStore());
     await tester.pumpWidget(
-      const LlaveroApp(locale: Locale('es'), themeMode: ThemeMode.light),
+      LlaveroApp(
+        controllers: controllers,
+        locale: const Locale('es'),
+        themeMode: ThemeMode.light,
+      ),
     );
+    await tester.pumpAndSettle();
 
-    expect(find.text('Tu espacio privado'), findsOneWidget);
+    expect(find.text('Bienvenido a Llavero'), findsOneWidget);
     expect(find.text('Todo offline, todo tuyo'), findsOneWidget);
 
-    final context = tester.element(find.text('Tu espacio privado'));
+    final context = tester.element(find.text('Bienvenido a Llavero'));
     final theme = Theme.of(context);
     expect(theme.brightness, Brightness.light);
     expect(theme.colorScheme.primary, const Color(0xFF2F5D62));
@@ -34,17 +42,23 @@ void main() {
     );
   });
 
-  testWidgets('shows the English placeholder with the dark theme', (
+  testWidgets('shows English onboarding with the dark theme', (
     WidgetTester tester,
   ) async {
+    final controllers = AppControllers(secureValues: MemorySecureValueStore());
     await tester.pumpWidget(
-      const LlaveroApp(locale: Locale('en'), themeMode: ThemeMode.dark),
+      LlaveroApp(
+        controllers: controllers,
+        locale: const Locale('en'),
+        themeMode: ThemeMode.dark,
+      ),
     );
+    await tester.pumpAndSettle();
 
-    expect(find.text('Your private space'), findsOneWidget);
+    expect(find.text('Welcome to Llavero'), findsOneWidget);
     expect(find.text('Offline, all yours'), findsOneWidget);
 
-    final context = tester.element(find.text('Your private space'));
+    final context = tester.element(find.text('Welcome to Llavero'));
     final theme = Theme.of(context);
     expect(theme.brightness, Brightness.dark);
     expect(theme.colorScheme.primary, const Color(0xFF6FB3B8));

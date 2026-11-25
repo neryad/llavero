@@ -59,6 +59,12 @@ class EntriesController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Locks the vault and removes its encrypted file from private storage.
+  Future<void> eraseVault() {
+    lock();
+    return _serialize(_storage.delete);
+  }
+
   /// Creates a new entry and saves it before exposing it to listeners.
   Future<VaultEntry> addEntry({
     required String title,

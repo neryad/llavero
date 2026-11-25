@@ -2,5 +2,85 @@
   "@@locale": "en",
   "appTitle": "Llavero",
   "placeholderTitle": "Your private space",
-  "placeholderMessage": "Offline, all yours"
+  "placeholderMessage": "Offline, all yours",
+  "loading": "Loading your private vault…",
+  "startupFailed": "The vault could not be opened. Please restart the app.",
+  "welcomeTitle": "Welcome to Llavero",
+  "welcomeMessage": "A private vault for the things your family needs to remember.",
+  "welcomeTagline": "Offline, all yours",
+  "languagePickerTitle": "Choose a language",
+  "languageEnglish": "English",
+  "languageSpanish": "Español",
+  "stepWelcome": "Welcome",
+  "stepHowItWorks": "How it works",
+  "stepCreatePin": "Create a PIN",
+  "stepSecurity": "Your security",
+  "howTitle": "How Llavero works",
+  "howOfflineTitle": "Always offline",
+  "howOfflineDescription": "Your vault stays on this device. Llavero does not connect to the internet.",
+  "howEncryptionTitle": "Encrypted on this device",
+  "howEncryptionDescription": "Your entries are encrypted and can only be opened with your PIN or enabled biometrics.",
+  "howExportTitle": "You control exports",
+  "howExportDescription": "Nothing is shared unless you choose to export it.",
+  "next": "Next",
+  "back": "Back",
+  "pinCreateTitle": "Create a 6-digit PIN",
+  "pinCreateDescription": "Choose a PIN you can remember. Avoid repeated or sequential digits.",
+  "pinConfirmTitle": "Confirm your PIN",
+  "pinConfirmDescription": "Enter the same six digits again.",
+  "pinStrengthHint": "Use six digits that are not repeated or sequential.",
+  "pinTooEasy": "That PIN is easy to guess. Choose another one.",
+  "pinMismatch": "Those PINs do not match. Start again.",
+  "pinContinue": "Continue",
+  "pinConfirmButton": "Confirm PIN",
+  "deleteDigit": "Delete last digit",
+  "biometricTitle": "Enable biometrics?",
+  "biometricDescription": "Use your device biometrics to unlock faster. Your Llavero PIN is always the fallback.",
+  "biometricSwitchTitle": "Unlock with biometrics",
+  "biometricNotAvailable": "Biometrics are not available on this device.",
+  "noPinRecovery": "A forgotten PIN cannot be recovered.",
+  "forgotPinWarning": "Llavero cannot reset or recover your PIN. Keep an encrypted backup.",
+  "backupRecommendation": "We recommend creating your first backup when export is available.",
+  "createFirstEntry": "Create your first entry",
+  "lockTitle": "Llavero is locked",
+  "lockPinPrompt": "Enter your 6-digit PIN",
+  "pinDigitsEntered": "{count} of 6 digits entered",
+  "wrongPin": "That PIN is incorrect.",
+  "lockoutCountdown": "{seconds, plural, =1{Try again in 1 second.} other{Try again in {seconds} seconds.}}",
+  "unlockBiometrics": "Unlock with biometrics",
+  "forgotPin": "Forgot your PIN?",
+  "eraseEverything": "Erase everything",
+  "eraseDialogTitle": "Erase the vault?",
+  "eraseDialogMessage": "This permanently removes the encrypted vault, its keys, and all entries. This cannot be undone.",
+  "eraseTypePrompt": "Type {phrase} to confirm.",
+  "eraseConfirmationPhrase": "DELETE EVERYTHING",
+  "eraseContinue": "Continue",
+  "cancel": "Cancel",
+  "eraseDeviceReason": "Confirm that you want to erase the Llavero vault.",
+  "erasePinFallbackTitle": "Enter your Llavero PIN",
+  "erasePinFallbackDescription": "Device authentication did not complete. Use your vault PIN to continue.",
+  "erasePinIncorrect": "The PIN is incorrect or a lockout is active. Nothing was erased.",
+  "biometricUnlockFailed": "Biometric unlock did not complete. Use your PIN instead.",
+  "vaultCreationFailed": "The vault could not be created. Try again.",
+  "@pinDigitsEntered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@lockoutCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "@eraseTypePrompt": {
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  }
 }
