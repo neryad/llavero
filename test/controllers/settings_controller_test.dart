@@ -31,6 +31,54 @@ void main() {
       await expectLater(controller.setLanguageCode('fr'), throwsArgumentError);
     });
 
+    test('persists and restores security and appearance preferences', () async {
+      final store = MemorySecureValueStore();
+      final controller = SettingsController(store: store);
+      addTearDown(controller.dispose);
+      await controller.initialize();
+
+      await controller.setThemeMode(AppThemeMode.dark);
+      await controller.setAutoLockDuration(AutoLockDuration.minute1);
+      await controller.setClipboardClearDuration(
+        ClipboardClearDuration.minute1,
+      );
+      await controller.setScreenshotProtectionEnabled(false);
+
+      final restored = SettingsController(store: store);
+      addTearDown(restored.dispose);
+      await restored.initialize();
+
+      expect(restored.themeMode, AppThemeMode.dark);
+      expect(restored.autoLockDuration, AutoLockDuration.minute1);
+      expect(restored.clipboardClearDuration, ClipboardClearDuration.minute1);
+      expect(restored.screenshotProtectionEnabled, isFalse);
+    });
+
+    test(
+      'uses secure defaults for missing or invalid preference values',
+      () async {
+        final store = MemorySecureValueStore()
+          ..values[SettingsController.themeModeStorageKey] = 'invalid'
+          ..values[SettingsController.autoLockDurationStorageKey] = 'invalid'
+          ..values[SettingsController.clipboardClearDurationStorageKey] =
+              'invalid'
+          ..values[SettingsController.screenshotProtectionStorageKey] =
+              'invalid';
+        final controller = SettingsController(store: store);
+        addTearDown(controller.dispose);
+
+        await controller.initialize();
+
+        expect(controller.themeMode, AppThemeMode.system);
+        expect(controller.autoLockDuration, AutoLockDuration.immediate);
+        expect(
+          controller.clipboardClearDuration,
+          ClipboardClearDuration.seconds30,
+        );
+        expect(controller.screenshotProtectionEnabled, isTrue);
+      },
+    );
+
     test(
       'shows a backup reminder when no completed backup is stored',
       () async {

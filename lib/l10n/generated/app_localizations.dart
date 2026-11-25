@@ -359,14 +359,14 @@ abstract class AppLocalizations {
   /// No description provided for @lockPinPrompt.
   ///
   /// In en, this message translates to:
-  /// **'Enter your 6-digit PIN'**
-  String get lockPinPrompt;
+  /// **'Enter your {length}-digit PIN'**
+  String lockPinPrompt(int length);
 
   /// No description provided for @pinDigitsEntered.
   ///
   /// In en, this message translates to:
-  /// **'{count} of 6 digits entered'**
-  String pinDigitsEntered(int count);
+  /// **'{count} of {length} digits entered'**
+  String pinDigitsEntered(int count, int length);
 
   /// No description provided for @wrongPin.
   ///
@@ -1513,6 +1513,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm that you want to replace all vault data.'**
   String get reauthenticationReplaceReason;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsAppearance;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settingsThemeSystem;
+
+  /// No description provided for @settingsThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// No description provided for @settingsThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsLanguageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language'**
+  String get settingsLanguageSystem;
+
+  /// No description provided for @settingsSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get settingsSecurity;
+
+  /// No description provided for @settingsAutoLock.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-lock'**
+  String get settingsAutoLock;
+
+  /// No description provided for @settingsAutoLockImmediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediately'**
+  String get settingsAutoLockImmediate;
+
+  /// No description provided for @settingsAutoLock30Seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'30 seconds'**
+  String get settingsAutoLock30Seconds;
+
+  /// No description provided for @settingsAutoLock1Minute.
+  ///
+  /// In en, this message translates to:
+  /// **'1 minute'**
+  String get settingsAutoLock1Minute;
+
+  /// No description provided for @settingsAutoLock5Minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes'**
+  String get settingsAutoLock5Minutes;
+
+  /// No description provided for @settingsClipboardClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear clipboard after'**
+  String get settingsClipboardClear;
+
+  /// No description provided for @settingsClipboard30Seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'30 seconds'**
+  String get settingsClipboard30Seconds;
+
+  /// No description provided for @settingsClipboard1Minute.
+  ///
+  /// In en, this message translates to:
+  /// **'1 minute'**
+  String get settingsClipboard1Minute;
+
+  /// No description provided for @settingsClipboard2Minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'2 minutes'**
+  String get settingsClipboard2Minutes;
+
+  /// No description provided for @settingsScreenshotProtection.
+  ///
+  /// In en, this message translates to:
+  /// **'Block screenshots'**
+  String get settingsScreenshotProtection;
+
+  /// No description provided for @settingsScreenshotDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the vault in screenshots and the app switcher.'**
+  String get settingsScreenshotDescription;
+
+  /// No description provided for @settingsChangePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get settingsChangePin;
+
+  /// No description provided for @settingsBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric unlock'**
+  String get settingsBiometrics;
+
+  /// No description provided for @settingsBiometricsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN will remain available as a fallback.'**
+  String get settingsBiometricsDescription;
+
+  /// No description provided for @settingsBiometricsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometrics are not available on this device.'**
+  String get settingsBiometricsUnavailable;
+
+  /// No description provided for @settingsBiometricsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not change the biometric setting. The vault was not changed.'**
+  String get settingsBiometricsFailed;
+
+  /// No description provided for @settingsPinDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Llavero PIN'**
+  String get settingsPinDialogTitle;
+
+  /// No description provided for @settingsCurrentPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Current PIN'**
+  String get settingsCurrentPin;
+
+  /// No description provided for @settingsNewPin.
+  ///
+  /// In en, this message translates to:
+  /// **'New PIN'**
+  String get settingsNewPin;
+
+  /// No description provided for @settingsConfirmNewPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new PIN'**
+  String get settingsConfirmNewPin;
+
+  /// No description provided for @settingsPinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN length'**
+  String get settingsPinLength;
+
+  /// No description provided for @settingsPinMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The new PINs do not match.'**
+  String get settingsPinMismatch;
+
+  /// No description provided for @settingsPinInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The PIN must be 4 to 8 digits and cannot be repeated or sequential.'**
+  String get settingsPinInvalid;
+
+  /// No description provided for @settingsPinChangeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The current PIN could not be verified. Nothing was changed.'**
+  String get settingsPinChangeFailed;
+
+  /// No description provided for @settingsPinChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN was changed.'**
+  String get settingsPinChanged;
+
+  /// No description provided for @settingsData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get settingsData;
+
+  /// No description provided for @settingsBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups and exports'**
+  String get settingsBackup;
+
+  /// No description provided for @settingsTrash.
+  ///
+  /// In en, this message translates to:
+  /// **'Trash'**
+  String get settingsTrash;
+
+  /// No description provided for @settingsSecurityHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Security health'**
+  String get settingsSecurityHealth;
+
+  /// No description provided for @securityHealthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Security health'**
+  String get securityHealthTitle;
+
+  /// No description provided for @securityHealthDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis runs in memory. Analyzed values are never sent or saved.'**
+  String get securityHealthDescription;
+
+  /// No description provided for @securityHealthChecked.
+  ///
+  /// In en, this message translates to:
+  /// **'Secrets checked: {count}'**
+  String securityHealthChecked(int count);
+
+  /// No description provided for @securityHealthWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak secrets: {count}'**
+  String securityHealthWeak(int count);
+
+  /// No description provided for @securityHealthReused.
+  ///
+  /// In en, this message translates to:
+  /// **'Reused secrets: {count}'**
+  String securityHealthReused(int count);
+
+  /// No description provided for @securityHealthAllClear.
+  ///
+  /// In en, this message translates to:
+  /// **'No weak or reused passwords were found.'**
+  String get securityHealthAllClear;
+
+  /// No description provided for @securityHealthNeedsAttention.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the marked secrets and update affected passwords.'**
+  String get securityHealthNeedsAttention;
 }
 
 class _AppLocalizationsDelegate

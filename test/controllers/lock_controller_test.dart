@@ -77,6 +77,76 @@ void main() {
       },
     );
 
+    test('changes the PIN and persists its selected length', () async {
+      await controller.createVault(pin: '582941');
+
+      expect(
+        await controller.changePin(currentPin: '111111', newPin: '48273915'),
+        isFalse,
+      );
+      expect(
+        await controller.changePin(currentPin: '582941', newPin: '48273915'),
+        isTrue,
+      );
+      expect(controller.pinLength, 8);
+
+      controller.lock();
+      expect(await controller.unlockWithPin('582941'), isFalse);
+      expect(await controller.unlockWithPin('48273915'), isTrue);
+    });
+
+    test(
+      'enables biometrics only after device authentication and PIN checks',
+      () async {
+        await controller.createVault(pin: '582941');
+        authenticator.isAvailable = true;
+
+        expect(
+          await controller.setBiometricsEnabled(
+            enabled: true,
+            pin: '111111',
+            reason: 'Enable biometrics',
+          ),
+          isFalse,
+        );
+        expect(biometricKeys.bytes, isNull);
+
+        authenticator.result = false;
+        expect(
+          await controller.setBiometricsEnabled(
+            enabled: true,
+            pin: '582941',
+            reason: 'Enable biometrics',
+          ),
+          isFalse,
+        );
+        expect(biometricKeys.bytes, isNull);
+
+        authenticator.result = true;
+        expect(
+          await controller.setBiometricsEnabled(
+            enabled: true,
+            pin: '582941',
+            reason: 'Enable biometrics',
+          ),
+          isTrue,
+        );
+        expect(controller.biometricsEnabled, isTrue);
+        expect(biometricKeys.bytes, isNotNull);
+
+        expect(
+          await controller.setBiometricsEnabled(
+            enabled: false,
+            pin: '582941',
+            reason: 'Disable biometrics',
+          ),
+          isTrue,
+        );
+        expect(controller.biometricsEnabled, isFalse);
+        expect(biometricKeys.bytes, isNull);
+      },
+    );
+
     test('counts wrong PINs and enforces the persisted lockout', () async {
       await controller.createVault(pin: '582941');
       controller.lock();
@@ -296,11 +366,12 @@ class _FakeDeviceAuthenticator implements DeviceAuthenticator {
 }
 
 class _FakeVaultCrypto extends VaultCrypto {
-  static const String correctPin = '582941';
+  String correctPin = '582941';
   static final SecretKey dataKey = SecretKey(List<int>.filled(32, 7));
 
   @override
   Future<GeneratedVaultKey> createVaultKey({required String pin}) async {
+    correctPin = pin;
     return GeneratedVaultKey(
       dataEncryptionKey: dataKey,
       keyMaterial: _wrappedMaterial(),
@@ -316,6 +387,15 @@ class _FakeVaultCrypto extends VaultCrypto {
       throw const VaultAuthenticationException();
     }
     return dataKey;
+  }
+
+  @override
+  Future<WrappedKeyMaterial> wrapDataEncryptionKey({
+    required String pin,
+    required List<int> dataEncryptionKey,
+  }) async {
+    correctPin = pin;
+    return _wrappedMaterial();
   }
 }
 

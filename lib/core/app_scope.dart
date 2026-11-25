@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/security/biometric_key_store.dart';
+import '../core/security/clipboard_clear_service.dart';
 import '../core/security/key_material_store.dart';
 import '../core/security/lockout_manager.dart';
 import '../core/security/secure_value_store.dart';
@@ -19,6 +20,7 @@ class AppControllers extends ChangeNotifier {
     VaultStorage? vaultStorage,
     VaultCrypto? crypto,
     DateTime Function()? clock,
+    ClipboardClearService? clipboardClearService,
   }) {
     final values = secureValues ?? FlutterSecureValueStore();
     final entries = EntriesController(storage: vaultStorage);
@@ -39,6 +41,7 @@ class AppControllers extends ChangeNotifier {
       settings: SettingsController(store: values),
       lock: lock,
       entries: entries,
+      clipboardClear: clipboardClearService ?? ClipboardClearService(),
     );
   }
 
@@ -46,6 +49,7 @@ class AppControllers extends ChangeNotifier {
     required this.settings,
     required this.lock,
     required this.entries,
+    required this.clipboardClear,
   }) {
     settings.addListener(notifyListeners);
     lock.addListener(notifyListeners);
@@ -55,6 +59,7 @@ class AppControllers extends ChangeNotifier {
   final SettingsController settings;
   final LockController lock;
   final EntriesController entries;
+  final ClipboardClearService clipboardClear;
 
   @override
   void dispose() {
@@ -64,6 +69,7 @@ class AppControllers extends ChangeNotifier {
     settings.dispose();
     lock.dispose();
     entries.dispose();
+    clipboardClear.dispose();
     super.dispose();
   }
 }

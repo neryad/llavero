@@ -43,8 +43,8 @@
   "backupRecommendation": "We recommend creating your first backup when export is available.",
   "createFirstEntry": "Create your first entry",
   "lockTitle": "Llavero is locked",
-  "lockPinPrompt": "Enter your 6-digit PIN",
-  "pinDigitsEntered": "{count} of 6 digits entered",
+  "lockPinPrompt": "Enter your {length}-digit PIN",
+  "pinDigitsEntered": "{count} of {length} digits entered",
   "wrongPin": "That PIN is incorrect.",
   "lockoutCountdown": "{seconds, plural, =1{Try again in 1 second.} other{Try again in {seconds} seconds.}}",
   "unlockBiometrics": "Unlock with biometrics",
@@ -236,6 +236,72 @@
   "reauthenticationExportReason": "Confirm that you want to export Llavero data.",
   "reauthenticateToReplace": "Confirm your identity to replace the current vault.",
   "reauthenticationReplaceReason": "Confirm that you want to replace all vault data.",
+  "settingsTitle": "Settings",
+  "settingsAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsThemeSystem": "System",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsLanguage": "Language",
+  "settingsLanguageSystem": "Device language",
+  "settingsSecurity": "Security",
+  "settingsAutoLock": "Auto-lock",
+  "settingsAutoLockImmediate": "Immediately",
+  "settingsAutoLock30Seconds": "30 seconds",
+  "settingsAutoLock1Minute": "1 minute",
+  "settingsAutoLock5Minutes": "5 minutes",
+  "settingsClipboardClear": "Clear clipboard after",
+  "settingsClipboard30Seconds": "30 seconds",
+  "settingsClipboard1Minute": "1 minute",
+  "settingsClipboard2Minutes": "2 minutes",
+  "settingsScreenshotProtection": "Block screenshots",
+  "settingsScreenshotDescription": "Hide the vault in screenshots and the app switcher.",
+  "settingsChangePin": "Change PIN",
+  "settingsBiometrics": "Biometric unlock",
+  "settingsBiometricsDescription": "Your PIN will remain available as a fallback.",
+  "settingsBiometricsUnavailable": "Biometrics are not available on this device.",
+  "settingsBiometricsFailed": "Could not change the biometric setting. The vault was not changed.",
+  "settingsPinDialogTitle": "Change Llavero PIN",
+  "settingsCurrentPin": "Current PIN",
+  "settingsNewPin": "New PIN",
+  "settingsConfirmNewPin": "Confirm new PIN",
+  "settingsPinLength": "PIN length",
+  "settingsPinMismatch": "The new PINs do not match.",
+  "settingsPinInvalid": "The PIN must be 4 to 8 digits and cannot be repeated or sequential.",
+  "settingsPinChangeFailed": "The current PIN could not be verified. Nothing was changed.",
+  "settingsPinChanged": "Your PIN was changed.",
+  "settingsData": "Data",
+  "settingsBackup": "Backups and exports",
+  "settingsTrash": "Trash",
+  "settingsSecurityHealth": "Security health",
+  "securityHealthTitle": "Security health",
+  "securityHealthDescription": "Analysis runs in memory. Analyzed values are never sent or saved.",
+  "securityHealthChecked": "Secrets checked: {count}",
+  "securityHealthWeak": "Weak secrets: {count}",
+  "securityHealthReused": "Reused secrets: {count}",
+  "securityHealthAllClear": "No weak or reused passwords were found.",
+  "securityHealthNeedsAttention": "Review the marked secrets and update affected passwords.",
+  "@securityHealthChecked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@securityHealthWeak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@securityHealthReused": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "@backupImportPreview": {
     "placeholders": {
       "entryCount": {
@@ -277,6 +343,16 @@
   "@pinDigitsEntered": {
     "placeholders": {
       "count": {
+        "type": "int"
+      },
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "@lockPinPrompt": {
+    "placeholders": {
+      "length": {
         "type": "int"
       }
     }

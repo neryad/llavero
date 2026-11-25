@@ -149,11 +149,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lockTitle => 'Llavero is locked';
 
   @override
-  String get lockPinPrompt => 'Enter your 6-digit PIN';
+  String lockPinPrompt(int length) {
+    return 'Enter your $length-digit PIN';
+  }
 
   @override
-  String pinDigitsEntered(int count) {
-    return '$count of 6 digits entered';
+  String pinDigitsEntered(int count, int length) {
+    return '$count of $length digits entered';
   }
 
   @override
@@ -794,4 +796,154 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reauthenticationReplaceReason =>
       'Confirm that you want to replace all vault data.';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsAppearance => 'Appearance';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeSystem => 'System';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get settingsLanguageSystem => 'Device language';
+
+  @override
+  String get settingsSecurity => 'Security';
+
+  @override
+  String get settingsAutoLock => 'Auto-lock';
+
+  @override
+  String get settingsAutoLockImmediate => 'Immediately';
+
+  @override
+  String get settingsAutoLock30Seconds => '30 seconds';
+
+  @override
+  String get settingsAutoLock1Minute => '1 minute';
+
+  @override
+  String get settingsAutoLock5Minutes => '5 minutes';
+
+  @override
+  String get settingsClipboardClear => 'Clear clipboard after';
+
+  @override
+  String get settingsClipboard30Seconds => '30 seconds';
+
+  @override
+  String get settingsClipboard1Minute => '1 minute';
+
+  @override
+  String get settingsClipboard2Minutes => '2 minutes';
+
+  @override
+  String get settingsScreenshotProtection => 'Block screenshots';
+
+  @override
+  String get settingsScreenshotDescription =>
+      'Hide the vault in screenshots and the app switcher.';
+
+  @override
+  String get settingsChangePin => 'Change PIN';
+
+  @override
+  String get settingsBiometrics => 'Biometric unlock';
+
+  @override
+  String get settingsBiometricsDescription =>
+      'Your PIN will remain available as a fallback.';
+
+  @override
+  String get settingsBiometricsUnavailable =>
+      'Biometrics are not available on this device.';
+
+  @override
+  String get settingsBiometricsFailed =>
+      'Could not change the biometric setting. The vault was not changed.';
+
+  @override
+  String get settingsPinDialogTitle => 'Change Llavero PIN';
+
+  @override
+  String get settingsCurrentPin => 'Current PIN';
+
+  @override
+  String get settingsNewPin => 'New PIN';
+
+  @override
+  String get settingsConfirmNewPin => 'Confirm new PIN';
+
+  @override
+  String get settingsPinLength => 'PIN length';
+
+  @override
+  String get settingsPinMismatch => 'The new PINs do not match.';
+
+  @override
+  String get settingsPinInvalid =>
+      'The PIN must be 4 to 8 digits and cannot be repeated or sequential.';
+
+  @override
+  String get settingsPinChangeFailed =>
+      'The current PIN could not be verified. Nothing was changed.';
+
+  @override
+  String get settingsPinChanged => 'Your PIN was changed.';
+
+  @override
+  String get settingsData => 'Data';
+
+  @override
+  String get settingsBackup => 'Backups and exports';
+
+  @override
+  String get settingsTrash => 'Trash';
+
+  @override
+  String get settingsSecurityHealth => 'Security health';
+
+  @override
+  String get securityHealthTitle => 'Security health';
+
+  @override
+  String get securityHealthDescription =>
+      'Analysis runs in memory. Analyzed values are never sent or saved.';
+
+  @override
+  String securityHealthChecked(int count) {
+    return 'Secrets checked: $count';
+  }
+
+  @override
+  String securityHealthWeak(int count) {
+    return 'Weak secrets: $count';
+  }
+
+  @override
+  String securityHealthReused(int count) {
+    return 'Reused secrets: $count';
+  }
+
+  @override
+  String get securityHealthAllClear =>
+      'No weak or reused passwords were found.';
+
+  @override
+  String get securityHealthNeedsAttention =>
+      'Review the marked secrets and update affected passwords.';
 }

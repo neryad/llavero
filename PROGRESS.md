@@ -138,4 +138,28 @@ La fase 2 se completó tras recibir la indicación «continue».
 5. Selecciona entradas para la hoja PDF, confirma la advertencia, autentícate y elige guardar, compartir o imprimir.
 6. Cancela el selector al crear un backup: el recordatorio debe seguir visible. Prueba una contraseña de backup incorrecta: la bóveda no debe cambiar.
 
-La fase 7 y posteriores siguen pendientes. Me detengo aquí y espero tu «continue» antes de empezar otra fase.
+## Fase 7: ajustes, seguridad y privacidad — completada
+
+- Se añadieron ajustes persistentes ES/EN para tema, idioma, auto-bloqueo, borrado del portapapeles y bloqueo de capturas.
+- Se implementó el cambio autenticado de PIN de 4–8 dígitos; su longitud se guarda junto al material cifrado y los registros antiguos siguen usando seis dígitos. La biometría puede activarse con PIN y autenticación del dispositivo, o desactivarse con el PIN.
+- La bóveda se bloquea al ir a segundo plano según el plazo configurado y verifica el tiempo transcurrido al volver, incluso si el temporizador del sistema quedó suspendido.
+- El canal nativo activa `FLAG_SECURE` en Android. En iOS se muestra una capa borrosa en el selector de aplicaciones y durante la grabación de pantalla; iOS no ofrece una API para impedir una captura de pantalla normal.
+- Los valores copiados se borran tras 30 segundos, 1 o 2 minutos, solo si siguen en el portapapeles; también se comprueba el vencimiento al reanudar la aplicación.
+- La pantalla de salud analiza secretos activos solo en memoria y muestra recuentos de contraseñas débiles o reutilizadas, nunca los valores.
+
+### Verificación
+
+- `flutter gen-l10n`, `flutter analyze` sin incidencias y `flutter test` con 122 pruebas aprobadas.
+- `flutter build apk --debug` y `flutter build ios --no-codesign` completados.
+- No se verificaron manualmente capturas, grabación, biometría ni ciclo de vida en un dispositivo físico; Android usa `FLAG_SECURE`, mientras iOS solo puede cubrir el selector y la grabación con una superposición.
+
+### Cómo probarla
+
+1. En Ajustes cambia tema/idioma, selecciona el tiempo de auto-bloqueo y el borrado del portapapeles; cierra y vuelve a abrir para confirmar que las preferencias persisten.
+2. Cambia el PIN a 4 u 8 dígitos, confirma dos veces y prueba el PIN nuevo y el anterior. La pantalla bloqueada debe pedir la longitud actual.
+3. Si el dispositivo admite biometría, habilítala en Ajustes con PIN y autenticación del dispositivo; cancela la comprobación para verificar que no queda habilitada. Desactívala con PIN y comprueba que el PIN sigue funcionando.
+4. Con la bóveda desbloqueada, envía la app a segundo plano: debe bloquearse inmediatamente o tras el tiempo elegido. Copia un secreto y espera el plazo; si copias otro contenido entretanto, Llavero no debe borrarlo.
+5. Abre Salud de seguridad y revisa los recuentos. Los valores secretos no deben aparecer en pantalla.
+6. Prueba en Android que las capturas estén bloqueadas. En iOS comprueba el desenfoque en el selector de aplicaciones y al iniciar una grabación; las capturas normales no se pueden deshabilitar mediante la API del sistema.
+
+La fase 7 queda completada; me detengo aquí y espero tu «continue» antes de iniciar la fase 8.

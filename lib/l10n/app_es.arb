@@ -43,8 +43,8 @@
   "backupRecommendation": "Te recomendamos crear tu primera copia cuando la exportación esté disponible.",
   "createFirstEntry": "Crear mi primera entrada",
   "lockTitle": "Llavero está bloqueado",
-  "lockPinPrompt": "Introduce tu PIN de 6 dígitos",
-  "pinDigitsEntered": "{count} de 6 dígitos introducidos",
+  "lockPinPrompt": "Introduce tu PIN de {length} dígitos",
+  "pinDigitsEntered": "{count} de {length} dígitos introducidos",
   "wrongPin": "Ese PIN no es correcto.",
   "lockoutCountdown": "{seconds, plural, =1{Inténtalo de nuevo en 1 segundo.} other{Inténtalo de nuevo en {seconds} segundos.}}",
   "unlockBiometrics": "Desbloquear con biometría",
@@ -236,6 +236,72 @@
   "reauthenticationExportReason": "Confirma que quieres exportar datos de Llavero.",
   "reauthenticateToReplace": "Confirma tu identidad para reemplazar la bóveda actual.",
   "reauthenticationReplaceReason": "Confirma que quieres reemplazar todos los datos de la bóveda.",
+  "settingsTitle": "Ajustes",
+  "settingsAppearance": "Apariencia",
+  "settingsTheme": "Tema",
+  "settingsThemeSystem": "Sistema",
+  "settingsThemeLight": "Claro",
+  "settingsThemeDark": "Oscuro",
+  "settingsLanguage": "Idioma",
+  "settingsLanguageSystem": "Idioma del dispositivo",
+  "settingsSecurity": "Seguridad",
+  "settingsAutoLock": "Bloqueo automático",
+  "settingsAutoLockImmediate": "Inmediatamente",
+  "settingsAutoLock30Seconds": "30 segundos",
+  "settingsAutoLock1Minute": "1 minuto",
+  "settingsAutoLock5Minutes": "5 minutos",
+  "settingsClipboardClear": "Borrar portapapeles después de",
+  "settingsClipboard30Seconds": "30 segundos",
+  "settingsClipboard1Minute": "1 minuto",
+  "settingsClipboard2Minutes": "2 minutos",
+  "settingsScreenshotProtection": "Bloquear capturas de pantalla",
+  "settingsScreenshotDescription": "Oculta la bóveda en capturas y al cambiar de aplicación.",
+  "settingsChangePin": "Cambiar PIN",
+  "settingsBiometrics": "Desbloqueo biométrico",
+  "settingsBiometricsDescription": "El PIN seguirá siendo necesario como alternativa.",
+  "settingsBiometricsUnavailable": "La biometría no está disponible en este dispositivo.",
+  "settingsBiometricsFailed": "No se pudo cambiar el ajuste biométrico. No se modificó la bóveda.",
+  "settingsPinDialogTitle": "Cambiar PIN de Llavero",
+  "settingsCurrentPin": "PIN actual",
+  "settingsNewPin": "PIN nuevo",
+  "settingsConfirmNewPin": "Confirma el PIN nuevo",
+  "settingsPinLength": "Longitud del PIN",
+  "settingsPinMismatch": "Los PIN nuevos no coinciden.",
+  "settingsPinInvalid": "El PIN debe tener de 4 a 8 dígitos y no ser repetido ni consecutivo.",
+  "settingsPinChangeFailed": "No se pudo verificar el PIN actual. No se cambió nada.",
+  "settingsPinChanged": "El PIN se cambió correctamente.",
+  "settingsData": "Datos",
+  "settingsBackup": "Copias y exportaciones",
+  "settingsTrash": "Papelera",
+  "settingsSecurityHealth": "Salud de seguridad",
+  "securityHealthTitle": "Salud de seguridad",
+  "securityHealthDescription": "El análisis se realiza en memoria. Nunca se envían ni guardan los valores analizados.",
+  "securityHealthChecked": "Secretos comprobados: {count}",
+  "securityHealthWeak": "Secretos débiles: {count}",
+  "securityHealthReused": "Secretos reutilizados: {count}",
+  "securityHealthAllClear": "No se encontraron contraseñas débiles ni reutilizadas.",
+  "securityHealthNeedsAttention": "Revisa los secretos marcados y actualiza las contraseñas afectadas.",
+  "@securityHealthChecked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@securityHealthWeak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@securityHealthReused": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "@backupImportPreview": {
     "placeholders": {
       "entryCount": {
@@ -277,6 +343,16 @@
   "@pinDigitsEntered": {
     "placeholders": {
       "count": {
+        "type": "int"
+      },
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "@lockPinPrompt": {
+    "placeholders": {
+      "length": {
         "type": "int"
       }
     }

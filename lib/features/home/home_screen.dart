@@ -47,6 +47,13 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.backup_outlined),
           ),
           IconButton(
+            key: const ValueKey('home-settings'),
+            tooltip: strings.settingsTitle,
+            onPressed: () =>
+                Navigator.of(context).pushNamed(AppRoutes.settings),
+            icon: const Icon(Icons.settings_outlined),
+          ),
+          IconButton(
             tooltip: strings.trash,
             onPressed: () => Navigator.of(context).pushNamed(AppRoutes.trash),
             icon: const Icon(Icons.delete_outline_rounded),

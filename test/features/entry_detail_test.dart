@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:llavero/core/app_scope.dart';
+import 'package:llavero/core/security/clipboard_clear_service.dart';
 import 'package:llavero/core/theme/app_theme.dart';
 import 'package:llavero/data/models/entry.dart';
 import 'package:llavero/features/entry/entry_detail_screen.dart';
@@ -68,7 +69,13 @@ void main() {
     addTearDown(
       () => messenger.setMockMethodCallHandler(SystemChannels.platform, null),
     );
-    await _pumpDetail(tester, _entry());
+    await _pumpDetail(
+      tester,
+      _entry(),
+      clipboardClearService: ClipboardClearService(
+        timerFactory: (_, _) => _NoopTimer(),
+      ),
+    );
 
     await tester.tap(find.byKey(const ValueKey('copy-field-0')));
     await tester.pump();
@@ -99,12 +106,14 @@ void main() {
 
 Future<AppControllers> _pumpDetail(
   WidgetTester tester,
-  VaultEntry entry,
-) async {
+  VaultEntry entry, {
+  ClipboardClearService? clipboardClearService,
+}) async {
   final storage = MemoryVaultStorage()..entries = <VaultEntry>[entry];
   final controllers = AppControllers(
     secureValues: MemorySecureValueStore(),
     vaultStorage: storage,
+    clipboardClearService: clipboardClearService,
   );
   addTearDown(controllers.dispose);
   await controllers.entries.unlock(dataKey: SecretKey(List<int>.filled(32, 5)));
@@ -122,6 +131,11 @@ Future<AppControllers> _pumpDetail(
   );
   await tester.pump();
   return controllers;
+}
+
+class _NoopTimer implements ClipboardClearTimer {
+  @override
+  void cancel() {}
 }
 
 VaultEntry _entry({String category = 'pin'}) {

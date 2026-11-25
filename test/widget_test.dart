@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:llavero/app.dart';
 import 'package:llavero/core/app_scope.dart';
 import 'package:llavero/core/theme/app_typography.dart';
+import 'package:llavero/controllers/settings_controller.dart';
 
 import 'support/memory_secure_value_store.dart';
 
@@ -84,6 +85,34 @@ void main() {
     );
 
     expect(exposedControllers, same(controllers));
+    controllers.dispose();
+  });
+
+  testWidgets('applies the stored theme mode to MaterialApp', (
+    WidgetTester tester,
+  ) async {
+    final controllers = AppControllers(secureValues: MemorySecureValueStore());
+    await controllers.settings.setThemeMode(AppThemeMode.dark);
+
+    await tester.pumpWidget(LlaveroApp(controllers: controllers));
+    await tester.pumpAndSettle();
+
+    final context = tester.element(find.text('Welcome to Llavero'));
+    expect(Theme.of(context).brightness, Brightness.dark);
+    controllers.dispose();
+  });
+
+  testWidgets('applies the persisted theme preference to the app', (
+    WidgetTester tester,
+  ) async {
+    final controllers = AppControllers(secureValues: MemorySecureValueStore());
+    await controllers.settings.setThemeMode(AppThemeMode.dark);
+
+    await tester.pumpWidget(LlaveroApp(controllers: controllers));
+    await tester.pumpAndSettle();
+
+    final context = tester.element(find.text('Welcome to Llavero'));
+    expect(Theme.of(context).brightness, Brightness.dark);
     controllers.dispose();
   });
 }

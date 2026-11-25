@@ -48,7 +48,7 @@ class _ReauthenticationDialogState extends State<ReauthenticationDialog> {
               controller: _pinController,
               obscureText: true,
               keyboardType: TextInputType.number,
-              maxLength: 8,
+              maxLength: widget.controllers.lock.pinLength,
               decoration: InputDecoration(
                 labelText: strings.reauthenticatePin,
                 errorText: _errorMessage,

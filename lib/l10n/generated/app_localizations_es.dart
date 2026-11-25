@@ -150,11 +150,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lockTitle => 'Llavero está bloqueado';
 
   @override
-  String get lockPinPrompt => 'Introduce tu PIN de 6 dígitos';
+  String lockPinPrompt(int length) {
+    return 'Introduce tu PIN de $length dígitos';
+  }
 
   @override
-  String pinDigitsEntered(int count) {
-    return '$count de 6 dígitos introducidos';
+  String pinDigitsEntered(int count, int length) {
+    return '$count de $length dígitos introducidos';
   }
 
   @override
@@ -794,4 +796,154 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get reauthenticationReplaceReason =>
       'Confirma que quieres reemplazar todos los datos de la bóveda.';
+
+  @override
+  String get settingsTitle => 'Ajustes';
+
+  @override
+  String get settingsAppearance => 'Apariencia';
+
+  @override
+  String get settingsTheme => 'Tema';
+
+  @override
+  String get settingsThemeSystem => 'Sistema';
+
+  @override
+  String get settingsThemeLight => 'Claro';
+
+  @override
+  String get settingsThemeDark => 'Oscuro';
+
+  @override
+  String get settingsLanguage => 'Idioma';
+
+  @override
+  String get settingsLanguageSystem => 'Idioma del dispositivo';
+
+  @override
+  String get settingsSecurity => 'Seguridad';
+
+  @override
+  String get settingsAutoLock => 'Bloqueo automático';
+
+  @override
+  String get settingsAutoLockImmediate => 'Inmediatamente';
+
+  @override
+  String get settingsAutoLock30Seconds => '30 segundos';
+
+  @override
+  String get settingsAutoLock1Minute => '1 minuto';
+
+  @override
+  String get settingsAutoLock5Minutes => '5 minutos';
+
+  @override
+  String get settingsClipboardClear => 'Borrar portapapeles después de';
+
+  @override
+  String get settingsClipboard30Seconds => '30 segundos';
+
+  @override
+  String get settingsClipboard1Minute => '1 minuto';
+
+  @override
+  String get settingsClipboard2Minutes => '2 minutos';
+
+  @override
+  String get settingsScreenshotProtection => 'Bloquear capturas de pantalla';
+
+  @override
+  String get settingsScreenshotDescription =>
+      'Oculta la bóveda en capturas y al cambiar de aplicación.';
+
+  @override
+  String get settingsChangePin => 'Cambiar PIN';
+
+  @override
+  String get settingsBiometrics => 'Desbloqueo biométrico';
+
+  @override
+  String get settingsBiometricsDescription =>
+      'El PIN seguirá siendo necesario como alternativa.';
+
+  @override
+  String get settingsBiometricsUnavailable =>
+      'La biometría no está disponible en este dispositivo.';
+
+  @override
+  String get settingsBiometricsFailed =>
+      'No se pudo cambiar el ajuste biométrico. No se modificó la bóveda.';
+
+  @override
+  String get settingsPinDialogTitle => 'Cambiar PIN de Llavero';
+
+  @override
+  String get settingsCurrentPin => 'PIN actual';
+
+  @override
+  String get settingsNewPin => 'PIN nuevo';
+
+  @override
+  String get settingsConfirmNewPin => 'Confirma el PIN nuevo';
+
+  @override
+  String get settingsPinLength => 'Longitud del PIN';
+
+  @override
+  String get settingsPinMismatch => 'Los PIN nuevos no coinciden.';
+
+  @override
+  String get settingsPinInvalid =>
+      'El PIN debe tener de 4 a 8 dígitos y no ser repetido ni consecutivo.';
+
+  @override
+  String get settingsPinChangeFailed =>
+      'No se pudo verificar el PIN actual. No se cambió nada.';
+
+  @override
+  String get settingsPinChanged => 'El PIN se cambió correctamente.';
+
+  @override
+  String get settingsData => 'Datos';
+
+  @override
+  String get settingsBackup => 'Copias y exportaciones';
+
+  @override
+  String get settingsTrash => 'Papelera';
+
+  @override
+  String get settingsSecurityHealth => 'Salud de seguridad';
+
+  @override
+  String get securityHealthTitle => 'Salud de seguridad';
+
+  @override
+  String get securityHealthDescription =>
+      'El análisis se realiza en memoria. Nunca se envían ni guardan los valores analizados.';
+
+  @override
+  String securityHealthChecked(int count) {
+    return 'Secretos comprobados: $count';
+  }
+
+  @override
+  String securityHealthWeak(int count) {
+    return 'Secretos débiles: $count';
+  }
+
+  @override
+  String securityHealthReused(int count) {
+    return 'Secretos reutilizados: $count';
+  }
+
+  @override
+  String get securityHealthAllClear =>
+      'No se encontraron contraseñas débiles ni reutilizadas.';
+
+  @override
+  String get securityHealthNeedsAttention =>
+      'Revisa los secretos marcados y actualiza las contraseñas afectadas.';
 }

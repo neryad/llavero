@@ -23,7 +23,7 @@ void main() {
         List<int>.generate(32, (index) => index),
       );
 
-      await store.save(material);
+      await store.save(material, pinLength: 8);
       final persistedValue = secureValues.values.values.single;
       final restored = await store.load();
 
@@ -34,7 +34,27 @@ void main() {
       expect(restored?.nonce, equals(material.nonce));
       expect(restored?.encryptedDataKey, equals(material.encryptedDataKey));
       expect(restored?.mac, equals(material.mac));
+      expect(await store.loadPinLength(), 8);
     });
+
+    test(
+      'loads legacy key records with the default six-digit PIN length',
+      () async {
+        final secureValues = MemorySecureValueStore();
+        final material = WrappedKeyMaterial(
+          salt: List<int>.filled(16, 1),
+          kdfIterations: VaultCrypto.iterationCount,
+          nonce: List<int>.filled(12, 2),
+          encryptedDataKey: List<int>.filled(32, 3),
+          mac: List<int>.filled(16, 4),
+        );
+        secureValues.values[KeyMaterialStore.storageKey] = jsonEncode(
+          material.toJson(),
+        );
+
+        expect(await KeyMaterialStore(secureValues).loadPinLength(), 6);
+      },
+    );
 
     test('returns null when no key material has been saved', () async {
       final store = KeyMaterialStore(MemorySecureValueStore());

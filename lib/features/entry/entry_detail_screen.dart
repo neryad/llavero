@@ -321,7 +321,11 @@ class EntryDetailScreen extends StatelessWidget {
 
   Future<void> _copyField(BuildContext context, String value) async {
     final strings = AppLocalizations.of(context);
-    await Clipboard.setData(ClipboardData(text: value));
+    final controllers = AppScope.of(context);
+    await controllers.clipboardClear.copyAndSchedule(
+      value,
+      controllers.settings.clipboardClearDuration.duration,
+    );
     await HapticFeedback.selectionClick();
     if (context.mounted) {
       ScaffoldMessenger.of(

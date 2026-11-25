@@ -85,14 +85,15 @@ class _LockScreenState extends State<LockScreen>
   }
 
   void _appendDigit(String digit) {
-    if (_pin.length >= 6 || _attemptingUnlock || _isLockedOut) {
+    final pinLength = AppScope.of(context).lock.pinLength;
+    if (_pin.length >= pinLength || _attemptingUnlock || _isLockedOut) {
       return;
     }
     setState(() {
       _pin += digit;
       _errorMessage = null;
     });
-    if (_pin.length == 6) {
+    if (_pin.length == pinLength) {
       _unlockWithPin(_pin);
     }
   }
@@ -249,6 +250,7 @@ class _LockScreenState extends State<LockScreen>
 
   Future<String?> _askForErasePin(AppLocalizations strings) {
     var pin = '';
+    final pinLength = AppScope.of(context).lock.pinLength;
     return showDialog<String>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
@@ -260,13 +262,13 @@ class _LockScreenState extends State<LockScreen>
               children: <Widget>[
                 Text(strings.erasePinFallbackDescription),
                 const SizedBox(height: 12),
-                _pinDots(strings, pin.length),
+                _pinDots(strings, pin.length, pinLength),
                 const SizedBox(height: 12),
                 PinKeypad(
                   keyPrefix: 'erase-pin',
                   deleteLabel: strings.deleteDigit,
                   onDigitPressed: (digit) {
-                    if (pin.length < 6) {
+                    if (pin.length < pinLength) {
                       setDialogState(() => pin += digit);
                     }
                   },
@@ -287,7 +289,7 @@ class _LockScreenState extends State<LockScreen>
               child: Text(strings.cancel),
             ),
             FilledButton(
-              onPressed: pin.length == 6
+              onPressed: pin.length == pinLength
                   ? () => Navigator.pop(dialogContext, pin)
                   : null,
               child: Text(strings.eraseContinue),
@@ -331,7 +333,7 @@ class _LockScreenState extends State<LockScreen>
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    strings.lockPinPrompt,
+                    strings.lockPinPrompt(controllers.lock.pinLength),
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyLarge,
                   ),
@@ -349,7 +351,11 @@ class _LockScreenState extends State<LockScreen>
                     },
                     child: Column(
                       children: <Widget>[
-                        _pinDots(strings, _pin.length),
+                        _pinDots(
+                          strings,
+                          _pin.length,
+                          controllers.lock.pinLength,
+                        ),
                         const SizedBox(height: 20),
                         PinKeypad(
                           keyPrefix: 'lock',
@@ -412,14 +418,14 @@ class _LockScreenState extends State<LockScreen>
     );
   }
 
-  Widget _pinDots(AppLocalizations strings, int filledCount) {
+  Widget _pinDots(AppLocalizations strings, int filledCount, int pinLength) {
     final theme = Theme.of(context);
     return Semantics(
-      label: strings.pinDigitsEntered(filledCount),
+      label: strings.pinDigitsEntered(filledCount, pinLength),
       child: ExcludeSemantics(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List<Widget>.generate(6, (index) {
+          children: List<Widget>.generate(pinLength, (index) {
             final filled = index < filledCount;
             return Container(
               width: 14,

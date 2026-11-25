@@ -559,7 +559,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _pinDots(AppLocalizations strings, ThemeData theme) {
     return Semantics(
-      label: strings.pinDigitsEntered(_pin.length),
+      label: strings.pinDigitsEntered(_pin.length, 6),
       child: ExcludeSemantics(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

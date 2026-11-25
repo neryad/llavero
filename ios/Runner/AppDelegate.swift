@@ -37,5 +37,28 @@ import UIKit
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+    guard let registrar = engineBridge.pluginRegistry.registrar(
+      forPlugin: "LlaveroScreenProtection"
+    ) else {
+      return
+    }
+    let channel = FlutterMethodChannel(
+      name: "llavero/screen_protection",
+      binaryMessenger: registrar.messenger()
+    )
+    channel.setMethodCallHandler { call, result in
+      guard call.method == "setEnabled", let enabled = call.arguments as? Bool else {
+        result(FlutterMethodNotImplemented)
+        return
+      }
+      UserDefaults.standard.set(enabled, forKey: "llavero.screenProtectionEnabled")
+      NotificationCenter.default.post(name: .llaveroScreenProtectionChanged, object: nil)
+      result(nil)
+    }
   }
+}
+
+extension Notification.Name {
+  static let llaveroScreenProtectionChanged =
+    Notification.Name("llavero.screenProtectionChanged")
 }

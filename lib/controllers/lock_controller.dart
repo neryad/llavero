@@ -43,6 +43,7 @@ class LockController extends ChangeNotifier {
 
   WrappedKeyMaterial? _keyMaterial;
   LockoutState _lockoutState = LockoutState.empty;
+  int _pinLength = KeyMaterialStore.defaultPinLength;
   bool _initialized = false;
   bool _hasVault = false;
   bool _biometricsEnabled = false;
@@ -53,6 +54,8 @@ class LockController extends ChangeNotifier {
   bool get isUnlocked => _entries.isUnlocked;
 
   bool get biometricsEnabled => _biometricsEnabled;
+
+  int get pinLength => _pinLength;
 
   bool get isBusy => _isBusy;
 
@@ -66,6 +69,9 @@ class LockController extends ChangeNotifier {
     }
     _keyMaterial = await _keyMaterialStore.load();
     _hasVault = _keyMaterial != null;
+    _pinLength = _hasVault
+        ? await _keyMaterialStore.loadPinLength()
+        : KeyMaterialStore.defaultPinLength;
     _lockoutState = await _lockoutManager.loadState();
     _biometricsEnabled =
         _hasVault &&
@@ -101,7 +107,10 @@ class LockController extends ChangeNotifier {
           );
           biometricKeySaved = true;
         }
-        await _keyMaterialStore.save(generated.keyMaterial);
+        await _keyMaterialStore.save(
+          generated.keyMaterial,
+          pinLength: pin.length,
+        );
         if (enableBiometrics) {
           await _secureValues.write(biometricEnabledStorageKey, 'true');
         }
@@ -196,6 +205,108 @@ class LockController extends ChangeNotifier {
     });
   }
 
+  /// Re-wraps the same data key with a new PIN and stores its numeric length.
+  Future<bool> changePin({
+    required String currentPin,
+    required String newPin,
+  }) async {
+    await initialize();
+    final material = _keyMaterial;
+    if (!_hasVault ||
+        material == null ||
+        !_entries.isUnlocked ||
+        _isBusy ||
+        PinValidator.validate(newPin, length: newPin.length) != null) {
+      return false;
+    }
+
+    return _runBusy(() async {
+      _lockoutState = await _lockoutManager.loadState();
+      if (_lockoutState.remainingAt(_clock()) > Duration.zero) {
+        return false;
+      }
+
+      final SecretKey dataKey;
+      try {
+        dataKey = await _crypto.unwrapDataEncryptionKey(
+          pin: currentPin,
+          keyMaterial: material,
+        );
+      } on VaultAuthenticationException {
+        _lockoutState = await _lockoutManager.recordFailure();
+        return false;
+      }
+
+      final updatedMaterial = await _crypto.wrapDataEncryptionKey(
+        pin: newPin,
+        dataEncryptionKey: await dataKey.extractBytes(),
+      );
+      await _keyMaterialStore.save(updatedMaterial, pinLength: newPin.length);
+      _keyMaterial = updatedMaterial;
+      _pinLength = newPin.length;
+      _lockoutState = await _lockoutManager.recordSuccess();
+      return true;
+    });
+  }
+
+  /// Requires the vault PIN and device authentication before enabling biometrics.
+  Future<bool> setBiometricsEnabled({
+    required bool enabled,
+    required String pin,
+    required String reason,
+  }) async {
+    await initialize();
+    final material = _keyMaterial;
+    if (!_hasVault ||
+        material == null ||
+        !_entries.isUnlocked ||
+        _isBusy ||
+        enabled == _biometricsEnabled) {
+      return false;
+    }
+    if (enabled && !await _deviceAuthenticator.checkAvailability()) {
+      return false;
+    }
+
+    return _runBusy(() async {
+      _lockoutState = await _lockoutManager.loadState();
+      if (_lockoutState.remainingAt(_clock()) > Duration.zero) {
+        return false;
+      }
+
+      final SecretKey dataKey;
+      try {
+        dataKey = await _crypto.unwrapDataEncryptionKey(
+          pin: pin,
+          keyMaterial: material,
+        );
+      } on VaultAuthenticationException {
+        _lockoutState = await _lockoutManager.recordFailure();
+        return false;
+      }
+
+      if (enabled) {
+        try {
+          if (!await _deviceAuthenticator.authenticate(reason: reason)) {
+            return false;
+          }
+          await _biometricKeyStore.write(await dataKey.extractBytes());
+          await _secureValues.write(biometricEnabledStorageKey, 'true');
+        } catch (_) {
+          await _biometricKeyStore.delete();
+          await _secureValues.delete(biometricEnabledStorageKey);
+          rethrow;
+        }
+      } else {
+        await _biometricKeyStore.delete();
+        await _secureValues.delete(biometricEnabledStorageKey);
+      }
+      _biometricsEnabled = enabled;
+      _lockoutState = await _lockoutManager.recordSuccess();
+      return true;
+    });
+  }
+
   /// Confirms enabled device biometrics without changing the unlocked session.
   Future<bool> reauthenticateWithBiometrics({required String reason}) async {
     await initialize();
@@ -285,6 +396,7 @@ class LockController extends ChangeNotifier {
     await _secureValues.delete(biometricEnabledStorageKey);
     _lockoutState = await _lockoutManager.recordSuccess();
     _keyMaterial = null;
+    _pinLength = KeyMaterialStore.defaultPinLength;
     _hasVault = false;
     _biometricsEnabled = false;
     notifyListeners();
