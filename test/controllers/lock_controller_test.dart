@@ -97,6 +97,53 @@ void main() {
     });
 
     test(
+      'reauthenticates with PIN without locking or reloading the vault',
+      () async {
+        await controller.createVault(pin: '582941');
+        await entries.addEntry(title: 'Se conserva', category: 'other');
+
+        for (var attempt = 0; attempt < 5; attempt++) {
+          expect(await controller.reauthenticateWithPin('111111'), isFalse);
+        }
+        expect(controller.lockoutState.failedAttempts, 5);
+        expect(await controller.reauthenticateWithPin('582941'), isFalse);
+        expect(controller.isUnlocked, isTrue);
+        expect(entries.entries.single.title, 'Se conserva');
+
+        now = now.add(const Duration(seconds: 30));
+        expect(await controller.reauthenticateWithPin('582941'), isTrue);
+        expect(controller.lockoutState.failedAttempts, 0);
+        expect(controller.isUnlocked, isTrue);
+        expect(entries.entries.single.title, 'Se conserva');
+      },
+    );
+
+    test(
+      'reauthenticates with enabled device biometrics without relocking',
+      () async {
+        authenticator.isAvailable = true;
+        await controller.createVault(pin: '582941', enableBiometrics: true);
+
+        expect(
+          await controller.reauthenticateWithBiometrics(
+            reason: 'Delete an entry',
+          ),
+          isTrue,
+        );
+        expect(controller.isUnlocked, isTrue);
+
+        authenticator.result = false;
+        expect(
+          await controller.reauthenticateWithBiometrics(
+            reason: 'Delete an entry',
+          ),
+          isFalse,
+        );
+        expect(controller.isUnlocked, isTrue);
+      },
+    );
+
+    test(
       'unlocks with an enabled biometric key and keeps PIN fallback',
       () async {
         authenticator.isAvailable = true;

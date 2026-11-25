@@ -222,4 +222,381 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get vaultCreationFailed =>
       'The vault could not be created. Try again.';
+
+  @override
+  String get searchEntries => 'Search titles, people, or labels';
+
+  @override
+  String get filterCategories => 'Categories';
+
+  @override
+  String get filterPeople => 'People';
+
+  @override
+  String get allFilter => 'All';
+
+  @override
+  String get favoritesSection => 'Favorites';
+
+  @override
+  String get allEntriesSection => 'All entries';
+
+  @override
+  String get emptyVaultTitle => 'Your vault starts here';
+
+  @override
+  String get emptyVaultMessage =>
+      'Add your first entry to keep what your family needs to remember close at hand.';
+
+  @override
+  String get noSearchResults => 'No entries found';
+
+  @override
+  String get addEntryButton => 'Add entry';
+
+  @override
+  String get trash => 'Trash';
+
+  @override
+  String get categoryWifi => 'Wi-Fi';
+
+  @override
+  String get categoryEmail => 'Email';
+
+  @override
+  String get categoryStreaming => 'Streaming';
+
+  @override
+  String get categoryBanking => 'Banking and cards';
+
+  @override
+  String get categoryPin => 'PIN and codes';
+
+  @override
+  String get categorySocial => 'Social and apps';
+
+  @override
+  String get categoryDevices => 'Devices';
+
+  @override
+  String get categoryDocuments => 'Documents and IDs';
+
+  @override
+  String get categoryOther => 'Other';
+
+  @override
+  String get personUnknown => 'No person';
+
+  @override
+  String get newEntry => 'New entry';
+
+  @override
+  String get editEntry => 'Edit entry';
+
+  @override
+  String get entryTitle => 'Title';
+
+  @override
+  String get entryTitleHint => 'For example, Home Wi-Fi';
+
+  @override
+  String get entryCategory => 'Category';
+
+  @override
+  String get entryPerson => 'Person (optional)';
+
+  @override
+  String get entryNotes => 'Notes (optional)';
+
+  @override
+  String get entryFields => 'Saved details';
+
+  @override
+  String get addField => 'Add field';
+
+  @override
+  String get removeField => 'Remove field';
+
+  @override
+  String get moveFieldUp => 'Move field up';
+
+  @override
+  String get moveFieldDown => 'Move field down';
+
+  @override
+  String get fieldLabel => 'Field name';
+
+  @override
+  String get fieldValue => 'Value';
+
+  @override
+  String get saveEntry => 'Save entry';
+
+  @override
+  String get addCustomCategory => 'Create category';
+
+  @override
+  String get customCategoryName => 'Category name';
+
+  @override
+  String get categoryNameRequired => 'Enter a unique name for this category.';
+
+  @override
+  String get fieldType => 'Data type';
+
+  @override
+  String get fieldTypeText => 'Text';
+
+  @override
+  String get fieldTypeSecret => 'Secret';
+
+  @override
+  String get fieldTypeUrl => 'Link';
+
+  @override
+  String get fieldTypeNumberPin => 'Number or PIN';
+
+  @override
+  String get fieldTypeEmail => 'Email';
+
+  @override
+  String get fieldTypePhone => 'Phone';
+
+  @override
+  String get streamingPreset => 'Service';
+
+  @override
+  String get chooseService => 'Choose a service';
+
+  @override
+  String get passwordGenerator => 'Password generator';
+
+  @override
+  String generatorLength(int length) {
+    return 'Length: $length';
+  }
+
+  @override
+  String get generatorNumbers => 'Include numbers';
+
+  @override
+  String get generatorSymbols => 'Include symbols';
+
+  @override
+  String get generatorPassphrase => 'Passphrase';
+
+  @override
+  String get generatorWordCount => 'Number of words';
+
+  @override
+  String get generate => 'Generate';
+
+  @override
+  String get useGenerated => 'Use password';
+
+  @override
+  String get passwordStrengthWeak => 'Weak';
+
+  @override
+  String get passwordStrengthFair => 'Fair';
+
+  @override
+  String get passwordStrengthGood => 'Good';
+
+  @override
+  String get passwordStrengthStrong => 'Strong';
+
+  @override
+  String get entryTitleRequired => 'Enter a title for this entry.';
+
+  @override
+  String get fieldLabelRequired => 'Each field needs a name.';
+
+  @override
+  String get unsavedChanges => 'Unsaved changes';
+
+  @override
+  String get discardChanges => 'Discard changes';
+
+  @override
+  String get discardDialogTitle => 'Discard changes?';
+
+  @override
+  String get discardDialogMessage => 'Your unsaved changes will be lost.';
+
+  @override
+  String get saveFailed => 'Could not save. Check the vault and try again.';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get reveal => 'Reveal secret';
+
+  @override
+  String get hide => 'Hide secret';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get copied => 'Copied to clipboard';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get favorite => 'Add to favorites';
+
+  @override
+  String get removeFavorite => 'Remove from favorites';
+
+  @override
+  String get duplicate => 'Duplicate';
+
+  @override
+  String get moveToTrash => 'Move to trash';
+
+  @override
+  String get deleteEntryDialog => 'Move this entry to the trash?';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get wifiQr => 'Wi-Fi QR code';
+
+  @override
+  String get wifiQrHint =>
+      'Point your camera at this code to join the network.';
+
+  @override
+  String get qrMissingNetwork => 'Add the network name to create a QR code.';
+
+  @override
+  String get trashTitle => 'Trash';
+
+  @override
+  String get trashEmpty => 'The trash is empty';
+
+  @override
+  String get trashRestore => 'Restore';
+
+  @override
+  String get deleteForever => 'Delete forever';
+
+  @override
+  String get deleteForeverConfirm => 'This entry will be permanently deleted.';
+
+  @override
+  String get entryDeleted => 'Entry moved to trash';
+
+  @override
+  String get entryRestored => 'Entry restored';
+
+  @override
+  String get entryDeletedForever => 'Entry permanently deleted';
+
+  @override
+  String get fieldNetworkName => 'Network name';
+
+  @override
+  String get fieldPassword => 'Password';
+
+  @override
+  String get fieldSecurityType => 'Security type';
+
+  @override
+  String get fieldEmailAddress => 'Email address';
+
+  @override
+  String get fieldRecoveryEmail => 'Recovery email';
+
+  @override
+  String get fieldRecoveryPhone => 'Recovery phone';
+
+  @override
+  String get fieldService => 'Service';
+
+  @override
+  String get fieldEmailOrUsername => 'Username or email';
+
+  @override
+  String get fieldProfilePin => 'Profile PIN';
+
+  @override
+  String get fieldBank => 'Bank';
+
+  @override
+  String get fieldCardPin => 'Card PIN';
+
+  @override
+  String get fieldCodeName => 'Code name';
+
+  @override
+  String get fieldCode => 'Code';
+
+  @override
+  String get fieldDeviceName => 'Device';
+
+  @override
+  String get fieldDocumentType => 'Document type';
+
+  @override
+  String get fieldDocumentNumber => 'Document number';
+
+  @override
+  String get generatorLengthDescription =>
+      'Choose between 8 and 64 characters.';
+
+  @override
+  String get categoryAlreadyExists =>
+      'A category with this name already exists.';
+
+  @override
+  String get entrySaved => 'Entry saved';
+
+  @override
+  String get fieldSecretToggle => 'Show or hide secret value';
+
+  @override
+  String get fieldValueCopied =>
+      'Value copied. Clipboard clearing will be added later.';
+
+  @override
+  String get trashRetentionMessage => 'Entries are deleted after 30 days.';
+
+  @override
+  String get duplicateSuffix => 'copy';
+
+  @override
+  String addEntryForCategory(String category) {
+    return 'Add a $category entry';
+  }
+
+  @override
+  String entryCount(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String get reauthenticateTitle => 'Confirm your identity';
+
+  @override
+  String get reauthenticateToDelete =>
+      'Enter your Llavero PIN to permanently delete this entry.';
+
+  @override
+  String get reauthenticatePin => 'Llavero PIN';
+
+  @override
+  String get reauthenticationFailed =>
+      'Incorrect PIN or active lockout. Nothing was deleted.';
+
+  @override
+  String get reauthenticateWithBiometrics => 'Use biometrics';
+
+  @override
+  String get reauthenticationReason =>
+      'Confirm that you want to permanently delete an entry.';
 }

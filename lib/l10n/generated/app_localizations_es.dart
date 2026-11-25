@@ -223,4 +223,383 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get vaultCreationFailed =>
       'No se pudo crear la bóveda. Inténtalo de nuevo.';
+
+  @override
+  String get searchEntries => 'Buscar títulos, personas o etiquetas';
+
+  @override
+  String get filterCategories => 'Categorías';
+
+  @override
+  String get filterPeople => 'Personas';
+
+  @override
+  String get allFilter => 'Todas';
+
+  @override
+  String get favoritesSection => 'Favoritos';
+
+  @override
+  String get allEntriesSection => 'Todas las entradas';
+
+  @override
+  String get emptyVaultTitle => 'Tu bóveda empieza aquí';
+
+  @override
+  String get emptyVaultMessage =>
+      'Añade la primera entrada para tener a mano lo que tu familia necesita recordar.';
+
+  @override
+  String get noSearchResults => 'No se encontraron entradas';
+
+  @override
+  String get addEntryButton => 'Añadir entrada';
+
+  @override
+  String get trash => 'Papelera';
+
+  @override
+  String get categoryWifi => 'Wi-Fi';
+
+  @override
+  String get categoryEmail => 'Correo';
+
+  @override
+  String get categoryStreaming => 'Streaming';
+
+  @override
+  String get categoryBanking => 'Bancos y tarjetas';
+
+  @override
+  String get categoryPin => 'PIN y códigos';
+
+  @override
+  String get categorySocial => 'Redes y aplicaciones';
+
+  @override
+  String get categoryDevices => 'Dispositivos';
+
+  @override
+  String get categoryDocuments => 'Documentos e identificaciones';
+
+  @override
+  String get categoryOther => 'Otros';
+
+  @override
+  String get personUnknown => 'Sin persona';
+
+  @override
+  String get newEntry => 'Nueva entrada';
+
+  @override
+  String get editEntry => 'Editar entrada';
+
+  @override
+  String get entryTitle => 'Título';
+
+  @override
+  String get entryTitleHint => 'Por ejemplo, Wi-Fi de casa';
+
+  @override
+  String get entryCategory => 'Categoría';
+
+  @override
+  String get entryPerson => 'Persona (opcional)';
+
+  @override
+  String get entryNotes => 'Notas (opcional)';
+
+  @override
+  String get entryFields => 'Datos guardados';
+
+  @override
+  String get addField => 'Añadir campo';
+
+  @override
+  String get removeField => 'Eliminar campo';
+
+  @override
+  String get moveFieldUp => 'Mover campo arriba';
+
+  @override
+  String get moveFieldDown => 'Mover campo abajo';
+
+  @override
+  String get fieldLabel => 'Nombre del campo';
+
+  @override
+  String get fieldValue => 'Valor';
+
+  @override
+  String get saveEntry => 'Guardar entrada';
+
+  @override
+  String get addCustomCategory => 'Crear categoría';
+
+  @override
+  String get customCategoryName => 'Nombre de la categoría';
+
+  @override
+  String get categoryNameRequired =>
+      'Escribe un nombre distinto para esta categoría.';
+
+  @override
+  String get fieldType => 'Tipo de dato';
+
+  @override
+  String get fieldTypeText => 'Texto';
+
+  @override
+  String get fieldTypeSecret => 'Secreto';
+
+  @override
+  String get fieldTypeUrl => 'Enlace';
+
+  @override
+  String get fieldTypeNumberPin => 'Número o PIN';
+
+  @override
+  String get fieldTypeEmail => 'Correo electrónico';
+
+  @override
+  String get fieldTypePhone => 'Teléfono';
+
+  @override
+  String get streamingPreset => 'Servicio';
+
+  @override
+  String get chooseService => 'Elige un servicio';
+
+  @override
+  String get passwordGenerator => 'Generador de contraseñas';
+
+  @override
+  String generatorLength(int length) {
+    return 'Longitud: $length';
+  }
+
+  @override
+  String get generatorNumbers => 'Incluir números';
+
+  @override
+  String get generatorSymbols => 'Incluir símbolos';
+
+  @override
+  String get generatorPassphrase => 'Frase de paso';
+
+  @override
+  String get generatorWordCount => 'Cantidad de palabras';
+
+  @override
+  String get generate => 'Generar';
+
+  @override
+  String get useGenerated => 'Usar contraseña';
+
+  @override
+  String get passwordStrengthWeak => 'Débil';
+
+  @override
+  String get passwordStrengthFair => 'Aceptable';
+
+  @override
+  String get passwordStrengthGood => 'Buena';
+
+  @override
+  String get passwordStrengthStrong => 'Fuerte';
+
+  @override
+  String get entryTitleRequired => 'Escribe un título para la entrada.';
+
+  @override
+  String get fieldLabelRequired => 'Cada campo necesita un nombre.';
+
+  @override
+  String get unsavedChanges => 'Cambios sin guardar';
+
+  @override
+  String get discardChanges => 'Descartar cambios';
+
+  @override
+  String get discardDialogTitle => '¿Descartar cambios?';
+
+  @override
+  String get discardDialogMessage =>
+      'Los cambios que no guardaste se perderán.';
+
+  @override
+  String get saveFailed =>
+      'No se pudo guardar. Comprueba la bóveda e inténtalo de nuevo.';
+
+  @override
+  String get details => 'Detalles';
+
+  @override
+  String get reveal => 'Mostrar secreto';
+
+  @override
+  String get hide => 'Ocultar secreto';
+
+  @override
+  String get copy => 'Copiar';
+
+  @override
+  String get copied => 'Copiado al portapapeles';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get favorite => 'Añadir a favoritos';
+
+  @override
+  String get removeFavorite => 'Quitar de favoritos';
+
+  @override
+  String get duplicate => 'Duplicar';
+
+  @override
+  String get moveToTrash => 'Mover a la papelera';
+
+  @override
+  String get deleteEntryDialog => '¿Mover esta entrada a la papelera?';
+
+  @override
+  String get confirm => 'Confirmar';
+
+  @override
+  String get wifiQr => 'Código QR de Wi-Fi';
+
+  @override
+  String get wifiQrHint => 'Acerca la cámara para conectarte a esta red.';
+
+  @override
+  String get qrMissingNetwork =>
+      'Añade el nombre de la red para crear el código QR.';
+
+  @override
+  String get trashTitle => 'Papelera';
+
+  @override
+  String get trashEmpty => 'La papelera está vacía';
+
+  @override
+  String get trashRestore => 'Restaurar';
+
+  @override
+  String get deleteForever => 'Borrar definitivamente';
+
+  @override
+  String get deleteForeverConfirm => 'Esta entrada se eliminará para siempre.';
+
+  @override
+  String get entryDeleted => 'Entrada movida a la papelera';
+
+  @override
+  String get entryRestored => 'Entrada restaurada';
+
+  @override
+  String get entryDeletedForever => 'Entrada eliminada definitivamente';
+
+  @override
+  String get fieldNetworkName => 'Nombre de la red';
+
+  @override
+  String get fieldPassword => 'Contraseña';
+
+  @override
+  String get fieldSecurityType => 'Tipo de seguridad';
+
+  @override
+  String get fieldEmailAddress => 'Dirección de correo';
+
+  @override
+  String get fieldRecoveryEmail => 'Correo de recuperación';
+
+  @override
+  String get fieldRecoveryPhone => 'Teléfono de recuperación';
+
+  @override
+  String get fieldService => 'Servicio';
+
+  @override
+  String get fieldEmailOrUsername => 'Usuario o correo';
+
+  @override
+  String get fieldProfilePin => 'PIN del perfil';
+
+  @override
+  String get fieldBank => 'Banco o entidad';
+
+  @override
+  String get fieldCardPin => 'PIN de la tarjeta';
+
+  @override
+  String get fieldCodeName => 'Nombre del código';
+
+  @override
+  String get fieldCode => 'Código';
+
+  @override
+  String get fieldDeviceName => 'Dispositivo';
+
+  @override
+  String get fieldDocumentType => 'Tipo de documento';
+
+  @override
+  String get fieldDocumentNumber => 'Número de documento';
+
+  @override
+  String get generatorLengthDescription => 'Elige entre 8 y 64 caracteres.';
+
+  @override
+  String get categoryAlreadyExists => 'Ya existe una categoría con ese nombre.';
+
+  @override
+  String get entrySaved => 'Entrada guardada';
+
+  @override
+  String get fieldSecretToggle => 'Mostrar u ocultar el valor secreto';
+
+  @override
+  String get fieldValueCopied =>
+      'Valor copiado. Se borrará del portapapeles más adelante.';
+
+  @override
+  String get trashRetentionMessage =>
+      'Las entradas se eliminan después de 30 días.';
+
+  @override
+  String get duplicateSuffix => 'copia';
+
+  @override
+  String addEntryForCategory(String category) {
+    return 'Añadir una entrada de $category';
+  }
+
+  @override
+  String entryCount(int count) {
+    return '$count entradas';
+  }
+
+  @override
+  String get reauthenticateTitle => 'Confirma tu identidad';
+
+  @override
+  String get reauthenticateToDelete =>
+      'Introduce tu PIN de Llavero para borrar esta entrada definitivamente.';
+
+  @override
+  String get reauthenticatePin => 'PIN de Llavero';
+
+  @override
+  String get reauthenticationFailed =>
+      'PIN incorrecto o bloqueo activo. No se eliminó nada.';
+
+  @override
+  String get reauthenticateWithBiometrics => 'Usar biometría';
+
+  @override
+  String get reauthenticationReason =>
+      'Confirma que quieres borrar permanentemente una entrada.';
 }

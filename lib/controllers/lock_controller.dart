@@ -172,6 +172,45 @@ class LockController extends ChangeNotifier {
     });
   }
 
+  /// Confirms the PIN without changing the current unlocked session.
+  Future<bool> reauthenticateWithPin(String pin) async {
+    await initialize();
+    final material = _keyMaterial;
+    if (!_hasVault || material == null || _isBusy) {
+      return false;
+    }
+
+    return _runBusy(() async {
+      _lockoutState = await _lockoutManager.loadState();
+      if (_lockoutState.remainingAt(_clock()) > Duration.zero) {
+        return false;
+      }
+      try {
+        await _crypto.unwrapDataEncryptionKey(pin: pin, keyMaterial: material);
+      } on VaultAuthenticationException {
+        _lockoutState = await _lockoutManager.recordFailure();
+        return false;
+      }
+      _lockoutState = await _lockoutManager.recordSuccess();
+      return true;
+    });
+  }
+
+  /// Confirms enabled device biometrics without changing the unlocked session.
+  Future<bool> reauthenticateWithBiometrics({required String reason}) async {
+    await initialize();
+    if (!_hasVault || !_biometricsEnabled || _isBusy) {
+      return false;
+    }
+    return _runBusy(() async {
+      try {
+        return await _deviceAuthenticator.authenticate(reason: reason);
+      } on Object {
+        return false;
+      }
+    });
+  }
+
   /// Clears the decrypted entries and key when the app returns to a locked state.
   void lock() {
     if (!_entries.isUnlocked) {

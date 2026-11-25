@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../core/security/vault_crypto.dart';
 import 'models/entry.dart';
+import 'models/vault_category.dart';
 
 /// Reads and writes the single encrypted vault file in the app's private data.
 class VaultStorage {
@@ -13,16 +14,25 @@ class VaultStorage {
     : _crypto = crypto ?? VaultCrypto();
 
   static const String fileName = 'vault.llavero';
-  static const int _formatVersion = 1;
+  static const int _formatVersion = 2;
+  static const int _legacyFormatVersion = 1;
+  static const int _envelopeVersion = 1;
   static final List<int> _associatedData = utf8.encode('llavero.vault.v1');
 
   final Directory? _directory;
   final VaultCrypto _crypto;
 
   Future<List<VaultEntry>> load({required SecretKey dataKey}) async {
+    return (await loadContents(dataKey: dataKey)).entries;
+  }
+
+  Future<VaultContents> loadContents({required SecretKey dataKey}) async {
     final file = await _vaultFile(createDirectory: true);
     if (!await file.exists()) {
-      return const <VaultEntry>[];
+      return VaultContents(
+        entries: const <VaultEntry>[],
+        customCategories: const <VaultCategory>[],
+      );
     }
 
     final Map<String, Object?> envelope;
@@ -41,15 +51,28 @@ class VaultStorage {
 
     try {
       final payload = _decodeObject(utf8.decode(cleartext));
-      if (payload['version'] != _formatVersion) {
+      final payloadVersion = payload['version'];
+      if (payloadVersion != _formatVersion &&
+          payloadVersion != _legacyFormatVersion) {
         throw const FormatException('Invalid vault payload.');
       }
       final rawEntries = payload['entries'];
       if (rawEntries is! List<Object?>) {
         throw const FormatException('Invalid vault payload.');
       }
+      final rawCategories = payloadVersion == _formatVersion
+          ? payload['customCategories']
+          : const <Object?>[];
+      if (rawCategories is! List<Object?>) {
+        throw const FormatException('Invalid vault payload.');
+      }
 
-      return List<VaultEntry>.unmodifiable(rawEntries.map(VaultEntry.fromJson));
+      return VaultContents(
+        entries: rawEntries.map(VaultEntry.fromJson).toList(growable: false),
+        customCategories: rawCategories
+            .map(VaultCategory.fromJson)
+            .toList(growable: false),
+      );
     } on FormatException {
       throw const CorruptVaultException();
     }
@@ -57,12 +80,16 @@ class VaultStorage {
 
   Future<void> save({
     required List<VaultEntry> entries,
+    List<VaultCategory> customCategories = const <VaultCategory>[],
     required SecretKey dataKey,
   }) async {
     final cleartext = utf8.encode(
       jsonEncode(<String, Object?>{
         'version': _formatVersion,
         'entries': entries.map((entry) => entry.toJson()).toList(),
+        'customCategories': customCategories
+            .map((category) => category.toJson())
+            .toList(),
       }),
     );
     final encrypted = await _crypto.encryptPayload(
@@ -71,7 +98,7 @@ class VaultStorage {
       associatedData: _associatedData,
     );
     final envelope = jsonEncode(<String, Object>{
-      'version': _formatVersion,
+      'version': _envelopeVersion,
       'nonce': base64Encode(encrypted.nonce),
       'ciphertext': base64Encode(encrypted.cipherText),
       'mac': base64Encode(encrypted.mac.bytes),
@@ -112,7 +139,7 @@ class VaultStorage {
 
   SecretBox _decodeSecretBox(Map<String, Object?> envelope) {
     try {
-      if (envelope['version'] != _formatVersion) {
+      if (envelope['version'] != _envelopeVersion) {
         throw const FormatException('Invalid vault envelope.');
       }
       final nonce = _decodeBase64(envelope, 'nonce');
@@ -144,6 +171,17 @@ class VaultStorage {
     }
     throw const FormatException('Invalid vault object.');
   }
+}
+
+class VaultContents {
+  VaultContents({
+    required List<VaultEntry> entries,
+    required List<VaultCategory> customCategories,
+  }) : entries = List<VaultEntry>.unmodifiable(entries),
+       customCategories = List<VaultCategory>.unmodifiable(customCategories);
+
+  final List<VaultEntry> entries;
+  final List<VaultCategory> customCategories;
 }
 
 /// Signals invalid or unsupported vault data without exposing its contents.

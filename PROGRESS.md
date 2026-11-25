@@ -88,4 +88,29 @@ La fase 2 se completó tras recibir la indicación «continue».
 3. Cierra y vuelve a abrir la aplicación: debe aparecer la pantalla bloqueada. Prueba el PIN, cinco intentos incorrectos para ver el lockout y, si está activada, la biometría con fallback al PIN.
 4. En «¿Olvidaste tu PIN?», escribe «BORRAR TODO» y cancela o falla la biometría: la bóveda no debe borrarse; el borrado solo continúa con biometría del dispositivo o con el PIN correcto de Llavero.
 
-La fase 5 no comienza hasta recibir la indicación «continue».
+## Fase 5: inicio, gestión de entradas y papelera — completada
+
+- Se reemplazó el placeholder por el inicio de la bóveda con búsqueda segura (título, persona y etiquetas, nunca valores), filtros, favoritos y estado vacío.
+- Se añadieron categorías estándar con plantillas, categorías personalizadas cifradas junto con las entradas y lectura compatible de bóvedas v1 al nuevo formato de contenido v2.
+- Se implementaron formularios de alta/edición, autocompletado de personas, campos dinámicos reordenables, presets de streaming y generador local de contraseñas/frases de paso.
+- El detalle permite marcar favoritos, editar, duplicar, copiar y mover a papelera; los secretos aparecen ocultos y se vuelven a ocultar tras 10 segundos. Wi-Fi puede mostrar un QR generado localmente.
+- La papelera permite restaurar o borrar definitivamente; el borrado definitivo exige PIN o biometría habilitada, y los intentos PIN respetan el lockout existente.
+- Se añadió `qr_flutter`, dependencia ya permitida por el proyecto.
+
+### Verificación
+
+- `flutter gen-l10n` completado; `flutter analyze` sin incidencias.
+- `flutter test`: 83 pruebas aprobadas, incluidas migración v1, búsqueda sin valores, formularios, QR, lockout en reautenticación y flujo de papelera.
+- `flutter build apk --debug` y `flutter build ios --no-codesign` completados.
+- No se verificó manualmente la biometría ni la interfaz en un dispositivo físico; la reautenticación se cubre con dobles de prueba y compilaciones nativas.
+
+### Cómo probarla
+
+1. Ejecuta `flutter run` en Android o iOS. Completa el onboarding y crea un PIN para llegar al inicio.
+2. Toca «Añadir entrada», elige Wi-Fi, completa título, nombre de red y contraseña, y guarda. La tarjeta debe mostrar solo el título, categoría y persona.
+3. Busca el título, persona o nombre de un campo. Los valores de campos secretos no deben dar resultados.
+4. Abre la entrada: el secreto aparece oculto; tócalo para mostrarlo y comprueba que se oculta de nuevo a los 10 segundos. Copiar un valor es una acción explícita. El QR Wi-Fi se crea localmente.
+5. Prueba favorito, edición y duplicado. Mueve la entrada a la papelera, restáurala y prueba el borrado definitivo con PIN (o biometría si está activada); una autenticación fallida no debe borrarla.
+6. Crea una categoría personalizada y comprueba que sus campos se pueden añadir, eliminar y reordenar.
+
+Las fases 6 y posteriores siguen pendientes. Me detengo aquí y espero tu «continue» antes de empezar otra fase.

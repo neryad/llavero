@@ -4,9 +4,12 @@ import 'core/app_routes.dart';
 import 'core/app_scope.dart';
 import 'core/theme/app_theme.dart';
 import 'features/bootstrap/bootstrap_screen.dart';
-import 'features/home/placeholder_screen.dart';
+import 'features/entry/entry_form_screen.dart';
+import 'features/home/home_screen.dart';
 import 'features/lock/lock_screen.dart';
 import 'features/onboarding/onboarding_screen.dart';
+import 'features/entry/entry_detail_screen.dart';
+import 'features/trash/trash_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 
 class LlaveroApp extends StatefulWidget {
@@ -90,7 +93,30 @@ class _LlaveroAppState extends State<LlaveroApp> {
       case AppRoutes.home:
         return MaterialPageRoute<void>(
           settings: settings,
-          builder: (_) => const PlaceholderScreen(),
+          builder: (_) => const HomeScreen(),
+        );
+      case AppRoutes.entryForm:
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: (_) => EntryFormScreen(
+            entryId: settings.arguments is String
+                ? settings.arguments! as String
+                : null,
+          ),
+        );
+      case AppRoutes.entryDetail:
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: (_) => EntryDetailScreen(
+            entryId: settings.arguments is String
+                ? settings.arguments! as String
+                : '',
+          ),
+        );
+      case AppRoutes.trash:
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: (_) => const TrashScreen(),
         );
       default:
         return null;

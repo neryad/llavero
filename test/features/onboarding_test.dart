@@ -7,6 +7,7 @@ import 'package:llavero/core/security/biometric_key_store.dart';
 import 'package:llavero/core/security/key_material_store.dart';
 import 'package:llavero/core/security/vault_crypto.dart';
 import 'package:llavero/data/models/entry.dart';
+import 'package:llavero/data/models/vault_category.dart';
 import 'package:llavero/data/vault_storage.dart';
 
 import '../support/memory_secure_value_store.dart';
@@ -164,7 +165,8 @@ void main() {
       expect(controllers.lock.hasVault, isTrue);
       expect(controllers.lock.isUnlocked, isTrue);
       expect(controllers.lock.isBusy, isFalse);
-      expect(find.text('Tu espacio privado'), findsOneWidget);
+      expect(find.byKey(const Key('empty-vault-state')), findsOneWidget);
+      expect(find.byKey(const Key('add-entry-button')), findsOneWidget);
     });
   });
 }
@@ -207,8 +209,17 @@ class _MemoryVaultStorage extends VaultStorage {
   }
 
   @override
+  Future<VaultContents> loadContents({required SecretKey dataKey}) async {
+    return VaultContents(
+      entries: const <VaultEntry>[],
+      customCategories: const <VaultCategory>[],
+    );
+  }
+
+  @override
   Future<void> save({
     required List<VaultEntry> entries,
+    List<VaultCategory> customCategories = const <VaultCategory>[],
     required SecretKey dataKey,
   }) async {}
 }

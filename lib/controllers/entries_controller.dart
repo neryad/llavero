@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 import '../data/models/entry.dart';
+import '../data/models/vault_category.dart';
 import '../data/vault_storage.dart';
 
 /// Keeps decrypted entries in memory only while the vault is unlocked.
@@ -21,6 +22,7 @@ class EntriesController extends ChangeNotifier {
   final DateTime Function() _clock;
   final Uuid _uuid;
   final List<VaultEntry> _entries = <VaultEntry>[];
+  final List<VaultCategory> _customCategories = <VaultCategory>[];
   Future<void> _operationQueue = Future<void>.value();
   SecretKey? _dataKey;
   int _sessionVersion = 0;
@@ -29,6 +31,9 @@ class EntriesController extends ChangeNotifier {
 
   List<VaultEntry> get entries => List<VaultEntry>.unmodifiable(_entries);
 
+  List<VaultCategory> get customCategories =>
+      List<VaultCategory>.unmodifiable(_customCategories);
+
   /// Loads and decrypts the vault for this unlocked session.
   Future<void> unlock({required SecretKey dataKey}) {
     final sessionVersion = _sessionVersion;
@@ -36,13 +41,16 @@ class EntriesController extends ChangeNotifier {
       if (_dataKey != null) {
         return;
       }
-      final loadedEntries = await _storage.load(dataKey: dataKey);
+      final loadedContents = await _storage.loadContents(dataKey: dataKey);
       if (sessionVersion != _sessionVersion) {
         return;
       }
       _entries
         ..clear()
-        ..addAll(loadedEntries);
+        ..addAll(loadedContents.entries);
+      _customCategories
+        ..clear()
+        ..addAll(loadedContents.customCategories);
       _dataKey = dataKey;
       notifyListeners();
     });
@@ -56,6 +64,7 @@ class EntriesController extends ChangeNotifier {
     }
     _dataKey = null;
     _entries.clear();
+    _customCategories.clear();
     notifyListeners();
   }
 
@@ -90,6 +99,44 @@ class EntriesController extends ChangeNotifier {
       );
       await _saveChanges(<VaultEntry>[..._entries, entry]);
       return entry;
+    });
+  }
+
+  /// Adds a custom category to the encrypted vault.
+  Future<VaultCategory> addCustomCategory(String name) {
+    return _serialize(() async {
+      _requireUnlocked();
+      final normalizedName = name.trim();
+      if (normalizedName.isEmpty ||
+          _customCategories.any(
+            (category) =>
+                category.name.toLowerCase() == normalizedName.toLowerCase(),
+          )) {
+        throw ArgumentError.value(name, 'name', 'Category name is invalid.');
+      }
+      final category = VaultCategory(id: _uuid.v4(), name: normalizedName);
+      await _saveChanges(
+        _entries,
+        customCategories: <VaultCategory>[..._customCategories, category],
+      );
+      return category;
+    });
+  }
+
+  /// Creates a new entry with the same data but a fresh identity and dates.
+  Future<VaultEntry> duplicateEntry(String id) {
+    return _serialize(() async {
+      _requireUnlocked();
+      final original = _entries[_entryIndex(id)];
+      final now = _clock();
+      final duplicate = original.copyWith(
+        id: _uuid.v4(),
+        createdAt: now,
+        updatedAt: now,
+        deletedAt: null,
+      );
+      await _saveChanges(<VaultEntry>[..._entries, duplicate]);
+      return duplicate;
     });
   }
 
@@ -145,16 +192,49 @@ class EntriesController extends ChangeNotifier {
     });
   }
 
-  Future<void> _saveChanges(List<VaultEntry> nextEntries) async {
+  /// Permanently removes trash entries that have reached their 30-day limit.
+  Future<int> purgeExpiredTrash({DateTime? now}) {
+    return _serialize(() async {
+      _requireUnlocked();
+      final cutoff = (now ?? _clock()).subtract(const Duration(days: 30));
+      final nextEntries = _entries
+          .where(
+            (entry) =>
+                entry.deletedAt == null || entry.deletedAt!.isAfter(cutoff),
+          )
+          .toList(growable: false);
+      final purgedCount = _entries.length - nextEntries.length;
+      if (purgedCount > 0) {
+        await _saveChanges(nextEntries);
+      }
+      return purgedCount;
+    });
+  }
+
+  Future<void> _saveChanges(
+    List<VaultEntry> nextEntries, {
+    List<VaultCategory>? customCategories,
+  }) async {
     final dataKey = _requireUnlocked();
     final sessionVersion = _sessionVersion;
-    await _storage.save(entries: nextEntries, dataKey: dataKey);
+    final nextEntrySnapshot = List<VaultEntry>.of(nextEntries);
+    final nextCategorySnapshot = List<VaultCategory>.of(
+      customCategories ?? _customCategories,
+    );
+    await _storage.save(
+      entries: nextEntrySnapshot,
+      customCategories: nextCategorySnapshot,
+      dataKey: dataKey,
+    );
     if (sessionVersion != _sessionVersion || !identical(_dataKey, dataKey)) {
       return;
     }
     _entries
       ..clear()
-      ..addAll(nextEntries);
+      ..addAll(nextEntrySnapshot);
+    _customCategories
+      ..clear()
+      ..addAll(nextCategorySnapshot);
     notifyListeners();
   }
 

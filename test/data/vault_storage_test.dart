@@ -5,6 +5,7 @@ import 'package:cryptography/cryptography.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:llavero/core/security/vault_crypto.dart';
 import 'package:llavero/data/models/entry.dart';
+import 'package:llavero/data/models/vault_category.dart';
 import 'package:llavero/data/vault_storage.dart';
 
 void main() {
@@ -46,6 +47,66 @@ void main() {
     test('returns an empty list when no vault file exists', () async {
       expect(await storage.load(dataKey: dataKey), isEmpty);
     });
+
+    test(
+      'reads v1 data and stores custom categories in the encrypted v2 file',
+      () async {
+        final legacyEntry = _entry();
+        final legacyCleartext = utf8.encode(
+          jsonEncode(<String, Object?>{
+            'version': 1,
+            'entries': <Map<String, Object?>>[legacyEntry.toJson()],
+          }),
+        );
+        final encrypted = await VaultCrypto().encryptPayload(
+          legacyCleartext,
+          dataKey: dataKey,
+          associatedData: utf8.encode('llavero.vault.v1'),
+        );
+        final file = File('${directory.path}/vault.llavero');
+        await file.writeAsString(
+          jsonEncode(<String, Object>{
+            'version': 1,
+            'nonce': base64Encode(encrypted.nonce),
+            'ciphertext': base64Encode(encrypted.cipherText),
+            'mac': base64Encode(encrypted.mac.bytes),
+          }),
+        );
+
+        final legacyContents = await storage.loadContents(dataKey: dataKey);
+        expect(legacyContents.entries.single.toJson(), legacyEntry.toJson());
+        expect(legacyContents.customCategories, isEmpty);
+
+        const customCategory = VaultCategory(
+          id: 'custom-family',
+          name: 'Familia',
+        );
+        await storage.save(
+          entries: legacyContents.entries,
+          customCategories: const <VaultCategory>[customCategory],
+          dataKey: dataKey,
+        );
+
+        final persistedEnvelope =
+            jsonDecode(await file.readAsString()) as Map<String, Object?>;
+        final persistedCleartext = await VaultCrypto().decryptPayload(
+          _secretBoxFrom(persistedEnvelope),
+          dataKey: dataKey,
+          associatedData: utf8.encode('llavero.vault.v1'),
+        );
+        final persistedPayload =
+            jsonDecode(utf8.decode(persistedCleartext)) as Map<String, Object?>;
+        expect(persistedPayload['version'], 2);
+        expect(persistedPayload, isNot(contains('Familia')));
+
+        final restored = await storage.loadContents(dataKey: dataKey);
+        expect(restored.entries.single.toJson(), legacyEntry.toJson());
+        expect(
+          restored.customCategories.single.toJson(),
+          customCategory.toJson(),
+        );
+      },
+    );
 
     test('rejects a vault opened with a different data key', () async {
       await storage.save(entries: <VaultEntry>[_entry()], dataKey: dataKey);
@@ -96,6 +157,14 @@ void main() {
       },
     );
   });
+}
+
+SecretBox _secretBoxFrom(Map<String, Object?> envelope) {
+  return SecretBox(
+    base64Decode(envelope['ciphertext']! as String),
+    nonce: base64Decode(envelope['nonce']! as String),
+    mac: Mac(base64Decode(envelope['mac']! as String)),
+  );
 }
 
 Future<File> _vaultFile(Directory directory) async {
