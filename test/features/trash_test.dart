@@ -78,7 +78,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('confirm-reauthentication')));
     await tester.pumpAndSettle();
     expect(
-      find.text('PIN incorrecto o bloqueo activo. No se eliminó nada.'),
+      find.text('PIN incorrecto o bloqueo activo. No se realizó la acción.'),
       findsOneWidget,
     );
     expect(

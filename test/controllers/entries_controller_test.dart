@@ -4,6 +4,7 @@ import 'package:cryptography/cryptography.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:llavero/controllers/entries_controller.dart';
 import 'package:llavero/data/models/entry.dart';
+import 'package:llavero/data/models/vault_category.dart';
 import 'package:llavero/data/vault_storage.dart';
 
 void main() {
@@ -83,6 +84,134 @@ void main() {
         await reopened.unlock(dataKey: dataKey);
 
         expect(reopened.entries.single.toJson(), equals(entry.toJson()));
+      },
+    );
+
+    test('merges missing IDs and preserves current ID conflicts', () async {
+      final storage = VaultStorage(directory: directory);
+      final controller = EntriesController(storage: storage);
+      addTearDown(controller.dispose);
+      await controller.unlock(dataKey: dataKey);
+
+      await controller.replaceContents(
+        VaultContents(
+          entries: <VaultEntry>[
+            _entry(id: 'same-entry', title: 'Current entry'),
+            _entry(id: 'current-only', title: 'Keep this entry'),
+          ],
+          customCategories: const <VaultCategory>[
+            VaultCategory(id: 'same-category', name: 'Current category'),
+            VaultCategory(id: 'current-category', name: 'Keep this category'),
+          ],
+        ),
+      );
+
+      await controller.mergeContents(
+        VaultContents(
+          entries: <VaultEntry>[
+            _entry(id: 'same-entry', title: 'Backup entry'),
+            _entry(id: 'backup-only', title: 'Add this entry'),
+          ],
+          customCategories: const <VaultCategory>[
+            VaultCategory(id: 'same-category', name: 'Backup category'),
+            VaultCategory(id: 'backup-category', name: 'Add this category'),
+          ],
+        ),
+      );
+
+      expect(controller.entries, hasLength(3));
+      expect(
+        controller.entries
+            .firstWhere((entry) => entry.id == 'same-entry')
+            .title,
+        'Current entry',
+      );
+      expect(controller.customCategories, hasLength(3));
+      expect(
+        controller.customCategories
+            .firstWhere((category) => category.id == 'same-category')
+            .name,
+        'Current category',
+      );
+
+      final reopened = EntriesController(storage: storage);
+      addTearDown(reopened.dispose);
+      await reopened.unlock(dataKey: dataKey);
+      expect(reopened.entries.map((entry) => entry.id).toSet(), {
+        'same-entry',
+        'current-only',
+        'backup-only',
+      });
+      expect(reopened.customCategories, hasLength(3));
+    });
+
+    test(
+      'replaces all entries and categories with imported contents',
+      () async {
+        final controller = EntriesController(
+          storage: VaultStorage(directory: directory),
+        );
+        addTearDown(controller.dispose);
+        await controller.unlock(dataKey: dataKey);
+
+        await controller.replaceContents(
+          VaultContents(
+            entries: <VaultEntry>[_entry(id: 'old', title: 'Old entry')],
+            customCategories: const <VaultCategory>[
+              VaultCategory(id: 'old-category', name: 'Old category'),
+            ],
+          ),
+        );
+        final imported = VaultContents(
+          entries: <VaultEntry>[
+            _entry(id: 'restored', title: 'Restored entry'),
+          ],
+          customCategories: const <VaultCategory>[
+            VaultCategory(id: 'restored-category', name: 'Restored category'),
+          ],
+        );
+
+        await controller.replaceContents(imported);
+
+        expect(controller.entries.map((entry) => entry.id), ['restored']);
+        expect(controller.customCategories, imported.customCategories);
+      },
+    );
+
+    test(
+      'keeps memory and persisted contents unchanged when import save fails',
+      () async {
+        final storage = FailingVaultStorage(directory: directory);
+        final controller = EntriesController(storage: storage);
+        addTearDown(controller.dispose);
+        await controller.unlock(dataKey: dataKey);
+        final existing = await controller.addEntry(
+          title: 'Existing entry',
+          category: 'other',
+        );
+        storage.failWrites = true;
+
+        await expectLater(
+          controller.replaceContents(
+            VaultContents(
+              entries: <VaultEntry>[_entry(id: 'imported', title: 'Imported')],
+              customCategories: const <VaultCategory>[
+                VaultCategory(id: 'imported-category', name: 'Imported'),
+              ],
+            ),
+          ),
+          throwsStateError,
+        );
+
+        expect(controller.entries.single.id, existing.id);
+        expect(controller.customCategories, isEmpty);
+        final reopened = EntriesController(
+          storage: VaultStorage(directory: directory),
+        );
+        addTearDown(reopened.dispose);
+        await reopened.unlock(dataKey: dataKey);
+        expect(reopened.entries.single.id, existing.id);
+        expect(reopened.customCategories, isEmpty);
       },
     );
 
@@ -254,4 +383,38 @@ void main() {
       });
     });
   });
+}
+
+VaultEntry _entry({required String id, required String title}) {
+  return VaultEntry(
+    id: id,
+    title: title,
+    category: 'other',
+    fields: const <EntryField>[],
+    createdAt: DateTime.utc(2026, 11, 25),
+    updatedAt: DateTime.utc(2026, 11, 25),
+  );
+}
+
+class FailingVaultStorage extends VaultStorage {
+  FailingVaultStorage({required Directory directory})
+    : super(directory: directory);
+
+  bool failWrites = false;
+
+  @override
+  Future<void> save({
+    required List<VaultEntry> entries,
+    List<VaultCategory> customCategories = const <VaultCategory>[],
+    required SecretKey dataKey,
+  }) async {
+    if (failWrites) {
+      throw StateError('Simulated storage write failure.');
+    }
+    await super.save(
+      entries: entries,
+      customCategories: customCategories,
+      dataKey: dataKey,
+    );
+  }
 }

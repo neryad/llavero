@@ -113,4 +113,29 @@ La fase 2 se completó tras recibir la indicación «continue».
 5. Prueba favorito, edición y duplicado. Mueve la entrada a la papelera, restáurala y prueba el borrado definitivo con PIN (o biometría si está activada); una autenticación fallida no debe borrarla.
 6. Crea una categoría personalizada y comprueba que sus campos se pueden añadir, eliminar y reordenar.
 
-Las fases 6 y posteriores siguen pendientes. Me detengo aquí y espero tu «continue» antes de empezar otra fase.
+## Fase 6: copias, importación y exportaciones — completada
+
+- Se añadió el formato versionado `.llavero`: AES-256-GCM con clave derivada de una contraseña separada mediante PBKDF2-HMAC-SHA256 (600 000 iteraciones), sal aleatoria, parámetros validados y cabecera autenticada. Se requiere una contraseña de al menos 12 caracteres y se confirma al crearla.
+- La importación valida y descifra el archivo antes de mostrar el recuento. Permite combinar (conserva los datos actuales ante IDs repetidos) o reemplazar; el reemplazo exige escribir «REEMPLAZAR» y volver a autenticarse antes de guardar.
+- Se añadieron exportaciones JSON/CSV en texto claro con advertencia y reautenticación; el CSV escapa celdas y neutraliza prefijos de fórmulas de hoja de cálculo.
+- La hoja PDF permite seleccionar entradas, muestra sus campos/notas y usa la fuente Plus Jakarta Sans local. Se advierte antes de imprimir o compartir secretos.
+- Inicio muestra un recordatorio si no existe una copia cifrada completada en los últimos 30 días. Solo se persiste la fecha de una copia cifrada guardada o compartida correctamente.
+- La pantalla de copias está disponible desde Inicio; se añadieron `file_picker`, `share_plus`, `pdf` y `printing`, todos permitidos y sin flujo de red.
+
+### Verificación
+
+- `flutter gen-l10n` completado; `flutter analyze` sin incidencias y `flutter test` con 103 pruebas aprobadas.
+- `flutter build apk --debug`, `flutter build apk --release` y `flutter build ios --no-codesign` completados.
+- `aapt dump permissions` del APK release confirma que no declara `INTERNET`; el permiso se conserva solo en la variante debug.
+- No se probaron manualmente el selector/hoja de compartir/impresión ni la biometría en un dispositivo físico; los flujos se probaron con dobles y compilaciones nativas.
+
+### Cómo probarla
+
+1. Ejecuta `flutter run`, desbloquea la bóveda y abre el icono de copias en Inicio. Si no has guardado una copia cifrada o han pasado más de 30 días, verás el recordatorio.
+2. Crea una copia cifrada con una contraseña de 12 caracteres o más, confírmala y autentícate con PIN o biometría. Guarda o comparte el archivo `.llavero`; al completar la acción debe desaparecer el recordatorio.
+3. Importa el `.llavero`, escribe su contraseña y revisa el recuento antes de elegir «Combinar». Para reemplazar, escribe «REEMPLAZAR» y vuelve a autenticarte; cancelar o fallar no debe cambiar la bóveda.
+4. Prueba JSON y CSV: confirma la advertencia roja, autentícate y guarda/compártelo. Estos archivos contienen secretos sin cifrar.
+5. Selecciona entradas para la hoja PDF, confirma la advertencia, autentícate y elige guardar, compartir o imprimir.
+6. Cancela el selector al crear un backup: el recordatorio debe seguir visible. Prueba una contraseña de backup incorrecta: la bóveda no debe cambiar.
+
+La fase 7 y posteriores siguen pendientes. Me detengo aquí y espero tu «continue» antes de empezar otra fase.

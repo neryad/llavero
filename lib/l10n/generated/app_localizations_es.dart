@@ -594,7 +594,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reauthenticationFailed =>
-      'PIN incorrecto o bloqueo activo. No se eliminó nada.';
+      'PIN incorrecto o bloqueo activo. No se realizó la acción.';
 
   @override
   String get reauthenticateWithBiometrics => 'Usar biometría';
@@ -602,4 +602,196 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get reauthenticationReason =>
       'Confirma que quieres borrar permanentemente una entrada.';
+
+  @override
+  String get backupCenterTitle => 'Copias y exportaciones';
+
+  @override
+  String get backupReminderTitle => 'Crea una copia de seguridad';
+
+  @override
+  String get backupReminderDescription =>
+      'No se ha completado una copia cifrada en los últimos 30 días.';
+
+  @override
+  String get backupEncryptedTitle => 'Copia cifrada';
+
+  @override
+  String get backupEncryptedDescription =>
+      'Protege una copia completa con una contraseña independiente de tu PIN.';
+
+  @override
+  String get backupCreateEncrypted => 'Crear copia cifrada';
+
+  @override
+  String get backupImportButton => 'Importar copia';
+
+  @override
+  String get backupPlainTextTitle => 'Exportación en texto claro';
+
+  @override
+  String get backupPlainTextDescription =>
+      'CSV y JSON incluyen los valores de tus secretos.';
+
+  @override
+  String get backupExportJson => 'Exportar JSON';
+
+  @override
+  String get backupExportCsv => 'Exportar CSV';
+
+  @override
+  String get backupEmergencySheetTitle => 'Hoja familiar de emergencia';
+
+  @override
+  String get backupEmergencyDescription =>
+      'Selecciona qué entradas incluir en el PDF.';
+
+  @override
+  String get backupSelectEntries => 'Entradas para incluir';
+
+  @override
+  String get backupGeneratePdf => 'Preparar PDF';
+
+  @override
+  String get backupNoEntries => 'No hay entradas disponibles para incluir.';
+
+  @override
+  String get backupPasswordTitle => 'Contraseña de la copia';
+
+  @override
+  String get backupPasswordHint =>
+      'Usa una contraseña distinta de tu PIN de Llavero y guárdala por separado.';
+
+  @override
+  String get backupPasswordImportTitle => 'Abrir copia cifrada';
+
+  @override
+  String get backupPasswordImportHint =>
+      'Escribe la contraseña usada al crear esta copia.';
+
+  @override
+  String get backupPasswordLabel => 'Contraseña de la copia';
+
+  @override
+  String get backupPasswordConfirmLabel => 'Confirma la contraseña';
+
+  @override
+  String get backupPasswordTooShort => 'Usa al menos 12 caracteres.';
+
+  @override
+  String get backupPasswordMismatch => 'Las contraseñas no coinciden.';
+
+  @override
+  String get backupOpenBackup => 'Abrir copia';
+
+  @override
+  String get backupImportPreviewTitle => 'Contenido de la copia';
+
+  @override
+  String backupImportPreview(int entryCount, int categoryCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      entryCount,
+      locale: localeName,
+      other: '$entryCount entradas',
+      one: '1 entrada',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      categoryCount,
+      locale: localeName,
+      other: '$categoryCount categorías personalizadas',
+      one: '1 categoría personalizada',
+    );
+    return 'Esta copia contiene $_temp0 y $_temp1.';
+  }
+
+  @override
+  String get backupMerge => 'Combinar';
+
+  @override
+  String get backupReplace => 'Reemplazar bóveda';
+
+  @override
+  String get backupReplaceConfirmationTitle => '¿Reemplazar la bóveda?';
+
+  @override
+  String get backupReplaceConfirmationMessage =>
+      'Se sustituirán todas las entradas y categorías actuales. Esta acción no se puede deshacer.';
+
+  @override
+  String backupReplacePhraseLabel(String phrase) {
+    return 'Escribe $phrase para confirmar';
+  }
+
+  @override
+  String get backupReplacePhrase => 'REEMPLAZAR';
+
+  @override
+  String get backupImportInvalid =>
+      'No se pudo abrir la copia. Comprueba la contraseña y el archivo.';
+
+  @override
+  String get backupImportCompleted => 'Se combinaron las entradas de la copia.';
+
+  @override
+  String get backupReplaceCompleted => 'La bóveda se reemplazó con la copia.';
+
+  @override
+  String get backupExportCompleted => 'La copia cifrada se guardó o compartió.';
+
+  @override
+  String get fileExportCompleted => 'El archivo se guardó o compartió.';
+
+  @override
+  String get plainExportWarningTitle => 'Exportar secretos sin cifrar';
+
+  @override
+  String get plainExportWarning =>
+      'El archivo contendrá tus secretos en texto claro.';
+
+  @override
+  String get plainExportWarningDetails =>
+      'Cualquiera que acceda al archivo podrá leerlos. Compártelo solo si confías en el destino.';
+
+  @override
+  String get pdfExportWarningTitle => 'La hoja PDF contiene secretos';
+
+  @override
+  String get pdfExportWarning =>
+      'Imprimir o compartir esta hoja puede revelar todas las entradas que selecciones.';
+
+  @override
+  String get backupDestinationTitle => '¿Qué quieres hacer con el archivo?';
+
+  @override
+  String get backupSaveFile => 'Guardar archivo';
+
+  @override
+  String get backupShareFile => 'Compartir archivo';
+
+  @override
+  String get backupPrint => 'Imprimir PDF';
+
+  @override
+  String get backupExportFailed =>
+      'No se pudo completar la exportación. No se compartieron datos.';
+
+  @override
+  String get backupReauthenticate =>
+      'Confirma tu identidad antes de exportar datos de la bóveda.';
+
+  @override
+  String get reauthenticateToExport =>
+      'Confirma tu identidad para exportar datos de la bóveda.';
+
+  @override
+  String get reauthenticationExportReason =>
+      'Confirma que quieres exportar datos de Llavero.';
+
+  @override
+  String get reauthenticateToReplace =>
+      'Confirma tu identidad para reemplazar la bóveda actual.';
+
+  @override
+  String get reauthenticationReplaceReason =>
+      'Confirma que quieres reemplazar todos los datos de la bóveda.';
 }

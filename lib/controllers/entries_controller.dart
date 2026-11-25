@@ -68,6 +68,42 @@ class EntriesController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Adds missing imported IDs while preserving all current records.
+  Future<void> mergeContents(VaultContents imported) {
+    return _serialize(() async {
+      _requireUnlocked();
+      final nextEntries = List<VaultEntry>.of(_entries);
+      final entryIds = _entries.map((entry) => entry.id).toSet();
+      for (final entry in imported.entries) {
+        if (entryIds.add(entry.id)) {
+          nextEntries.add(entry);
+        }
+      }
+
+      final nextCategories = List<VaultCategory>.of(_customCategories);
+      final categoryIds = _customCategories
+          .map((category) => category.id)
+          .toSet();
+      for (final category in imported.customCategories) {
+        if (categoryIds.add(category.id)) {
+          nextCategories.add(category);
+        }
+      }
+      await _saveChanges(nextEntries, customCategories: nextCategories);
+    });
+  }
+
+  /// Replaces all in-memory and persisted contents with a validated backup.
+  Future<void> replaceContents(VaultContents imported) {
+    return _serialize(() async {
+      _requireUnlocked();
+      await _saveChanges(
+        imported.entries,
+        customCategories: imported.customCategories,
+      );
+    });
+  }
+
   /// Locks the vault and removes its encrypted file from private storage.
   Future<void> eraseVault() {
     lock();

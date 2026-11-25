@@ -6,4 +6,5 @@ abstract final class AppRoutes {
   static const entryDetail = '/entry/detail';
   static const entryForm = '/entry/form';
   static const trash = '/trash';
+  static const exportImport = '/backup/export-import';
 }

@@ -40,6 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(strings.appTitle),
         actions: [
           IconButton(
+            key: const ValueKey('home-export-import'),
+            tooltip: strings.backupCenterTitle,
+            onPressed: () =>
+                Navigator.of(context).pushNamed(AppRoutes.exportImport),
+            icon: const Icon(Icons.backup_outlined),
+          ),
+          IconButton(
             tooltip: strings.trash,
             onPressed: () => Navigator.of(context).pushNamed(AppRoutes.trash),
             icon: const Icon(Icons.delete_outline_rounded),
@@ -71,6 +78,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListView(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 96),
                   children: [
+                    if (controllers.settings.needsBackupReminder)
+                      Card(
+                        key: const ValueKey('backup-reminder-banner'),
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        child: ListTile(
+                          leading: const Icon(Icons.backup_outlined),
+                          title: Text(strings.backupReminderTitle),
+                          subtitle: Text(strings.backupReminderDescription),
+                          onTap: () => Navigator.of(
+                            context,
+                          ).pushNamed(AppRoutes.exportImport),
+                        ),
+                      ),
                     TextField(
                       key: const ValueKey('entry-search-field'),
                       controller: _searchController,

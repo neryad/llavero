@@ -180,9 +180,79 @@
   "reauthenticateTitle": "Confirma tu identidad",
   "reauthenticateToDelete": "Introduce tu PIN de Llavero para borrar esta entrada definitivamente.",
   "reauthenticatePin": "PIN de Llavero",
-  "reauthenticationFailed": "PIN incorrecto o bloqueo activo. No se eliminó nada.",
+  "reauthenticationFailed": "PIN incorrecto o bloqueo activo. No se realizó la acción.",
   "reauthenticateWithBiometrics": "Usar biometría",
   "reauthenticationReason": "Confirma que quieres borrar permanentemente una entrada.",
+  "backupCenterTitle": "Copias y exportaciones",
+  "backupReminderTitle": "Crea una copia de seguridad",
+  "backupReminderDescription": "No se ha completado una copia cifrada en los últimos 30 días.",
+  "backupEncryptedTitle": "Copia cifrada",
+  "backupEncryptedDescription": "Protege una copia completa con una contraseña independiente de tu PIN.",
+  "backupCreateEncrypted": "Crear copia cifrada",
+  "backupImportButton": "Importar copia",
+  "backupPlainTextTitle": "Exportación en texto claro",
+  "backupPlainTextDescription": "CSV y JSON incluyen los valores de tus secretos.",
+  "backupExportJson": "Exportar JSON",
+  "backupExportCsv": "Exportar CSV",
+  "backupEmergencySheetTitle": "Hoja familiar de emergencia",
+  "backupEmergencyDescription": "Selecciona qué entradas incluir en el PDF.",
+  "backupSelectEntries": "Entradas para incluir",
+  "backupGeneratePdf": "Preparar PDF",
+  "backupNoEntries": "No hay entradas disponibles para incluir.",
+  "backupPasswordTitle": "Contraseña de la copia",
+  "backupPasswordHint": "Usa una contraseña distinta de tu PIN de Llavero y guárdala por separado.",
+  "backupPasswordImportTitle": "Abrir copia cifrada",
+  "backupPasswordImportHint": "Escribe la contraseña usada al crear esta copia.",
+  "backupPasswordLabel": "Contraseña de la copia",
+  "backupPasswordConfirmLabel": "Confirma la contraseña",
+  "backupPasswordTooShort": "Usa al menos 12 caracteres.",
+  "backupPasswordMismatch": "Las contraseñas no coinciden.",
+  "backupOpenBackup": "Abrir copia",
+  "backupImportPreviewTitle": "Contenido de la copia",
+  "backupImportPreview": "Esta copia contiene {entryCount, plural, =1{1 entrada} other{{entryCount} entradas}} y {categoryCount, plural, =1{1 categoría personalizada} other{{categoryCount} categorías personalizadas}}.",
+  "backupMerge": "Combinar",
+  "backupReplace": "Reemplazar bóveda",
+  "backupReplaceConfirmationTitle": "¿Reemplazar la bóveda?",
+  "backupReplaceConfirmationMessage": "Se sustituirán todas las entradas y categorías actuales. Esta acción no se puede deshacer.",
+  "backupReplacePhraseLabel": "Escribe {phrase} para confirmar",
+  "backupReplacePhrase": "REEMPLAZAR",
+  "backupImportInvalid": "No se pudo abrir la copia. Comprueba la contraseña y el archivo.",
+  "backupImportCompleted": "Se combinaron las entradas de la copia.",
+  "backupReplaceCompleted": "La bóveda se reemplazó con la copia.",
+  "backupExportCompleted": "La copia cifrada se guardó o compartió.",
+  "fileExportCompleted": "El archivo se guardó o compartió.",
+  "plainExportWarningTitle": "Exportar secretos sin cifrar",
+  "plainExportWarning": "El archivo contendrá tus secretos en texto claro.",
+  "plainExportWarningDetails": "Cualquiera que acceda al archivo podrá leerlos. Compártelo solo si confías en el destino.",
+  "pdfExportWarningTitle": "La hoja PDF contiene secretos",
+  "pdfExportWarning": "Imprimir o compartir esta hoja puede revelar todas las entradas que selecciones.",
+  "backupDestinationTitle": "¿Qué quieres hacer con el archivo?",
+  "backupSaveFile": "Guardar archivo",
+  "backupShareFile": "Compartir archivo",
+  "backupPrint": "Imprimir PDF",
+  "backupExportFailed": "No se pudo completar la exportación. No se compartieron datos.",
+  "backupReauthenticate": "Confirma tu identidad antes de exportar datos de la bóveda.",
+  "reauthenticateToExport": "Confirma tu identidad para exportar datos de la bóveda.",
+  "reauthenticationExportReason": "Confirma que quieres exportar datos de Llavero.",
+  "reauthenticateToReplace": "Confirma tu identidad para reemplazar la bóveda actual.",
+  "reauthenticationReplaceReason": "Confirma que quieres reemplazar todos los datos de la bóveda.",
+  "@backupImportPreview": {
+    "placeholders": {
+      "entryCount": {
+        "type": "int"
+      },
+      "categoryCount": {
+        "type": "int"
+      }
+    }
+  },
+  "@backupReplacePhraseLabel": {
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
   "@generatorLength": {
     "placeholders": {
       "length": {

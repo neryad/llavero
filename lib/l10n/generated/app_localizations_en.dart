@@ -591,7 +591,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reauthenticationFailed =>
-      'Incorrect PIN or active lockout. Nothing was deleted.';
+      'Incorrect PIN or active lockout. No action was completed.';
 
   @override
   String get reauthenticateWithBiometrics => 'Use biometrics';
@@ -599,4 +599,199 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get reauthenticationReason =>
       'Confirm that you want to permanently delete an entry.';
+
+  @override
+  String get backupCenterTitle => 'Backups and exports';
+
+  @override
+  String get backupReminderTitle => 'Create a backup';
+
+  @override
+  String get backupReminderDescription =>
+      'No encrypted backup has been completed in the last 30 days.';
+
+  @override
+  String get backupEncryptedTitle => 'Encrypted backup';
+
+  @override
+  String get backupEncryptedDescription =>
+      'Protect a complete copy with a password separate from your PIN.';
+
+  @override
+  String get backupCreateEncrypted => 'Create encrypted backup';
+
+  @override
+  String get backupImportButton => 'Import backup';
+
+  @override
+  String get backupPlainTextTitle => 'Plain-text export';
+
+  @override
+  String get backupPlainTextDescription =>
+      'CSV and JSON include the values of your secrets.';
+
+  @override
+  String get backupExportJson => 'Export JSON';
+
+  @override
+  String get backupExportCsv => 'Export CSV';
+
+  @override
+  String get backupEmergencySheetTitle => 'Family emergency sheet';
+
+  @override
+  String get backupEmergencyDescription =>
+      'Select which entries to include in the PDF.';
+
+  @override
+  String get backupSelectEntries => 'Entries to include';
+
+  @override
+  String get backupGeneratePdf => 'Prepare PDF';
+
+  @override
+  String get backupNoEntries => 'There are no entries available to include.';
+
+  @override
+  String get backupPasswordTitle => 'Backup password';
+
+  @override
+  String get backupPasswordHint =>
+      'Use a password different from your Llavero PIN and keep it separate.';
+
+  @override
+  String get backupPasswordImportTitle => 'Open encrypted backup';
+
+  @override
+  String get backupPasswordImportHint =>
+      'Enter the password used to create this backup.';
+
+  @override
+  String get backupPasswordLabel => 'Backup password';
+
+  @override
+  String get backupPasswordConfirmLabel => 'Confirm password';
+
+  @override
+  String get backupPasswordTooShort => 'Use at least 12 characters.';
+
+  @override
+  String get backupPasswordMismatch => 'The passwords do not match.';
+
+  @override
+  String get backupOpenBackup => 'Open backup';
+
+  @override
+  String get backupImportPreviewTitle => 'Backup contents';
+
+  @override
+  String backupImportPreview(int entryCount, int categoryCount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      entryCount,
+      locale: localeName,
+      other: '$entryCount entries',
+      one: '1 entry',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      categoryCount,
+      locale: localeName,
+      other: '$categoryCount custom categories',
+      one: '1 custom category',
+    );
+    return 'This backup contains $_temp0 and $_temp1.';
+  }
+
+  @override
+  String get backupMerge => 'Merge';
+
+  @override
+  String get backupReplace => 'Replace vault';
+
+  @override
+  String get backupReplaceConfirmationTitle => 'Replace the vault?';
+
+  @override
+  String get backupReplaceConfirmationMessage =>
+      'All current entries and categories will be replaced. This cannot be undone.';
+
+  @override
+  String backupReplacePhraseLabel(String phrase) {
+    return 'Type $phrase to confirm';
+  }
+
+  @override
+  String get backupReplacePhrase => 'REPLACE';
+
+  @override
+  String get backupImportInvalid =>
+      'The backup could not be opened. Check the password and file.';
+
+  @override
+  String get backupImportCompleted => 'Backup entries were merged.';
+
+  @override
+  String get backupReplaceCompleted =>
+      'The vault was replaced with the backup.';
+
+  @override
+  String get backupExportCompleted =>
+      'The encrypted backup was saved or shared.';
+
+  @override
+  String get fileExportCompleted => 'The file was saved or shared.';
+
+  @override
+  String get plainExportWarningTitle => 'Export unencrypted secrets';
+
+  @override
+  String get plainExportWarning =>
+      'The file will contain your secrets in plain text.';
+
+  @override
+  String get plainExportWarningDetails =>
+      'Anyone with access to the file can read them. Share it only with a destination you trust.';
+
+  @override
+  String get pdfExportWarningTitle => 'The PDF sheet contains secrets';
+
+  @override
+  String get pdfExportWarning =>
+      'Printing or sharing this sheet may expose every entry you select.';
+
+  @override
+  String get backupDestinationTitle =>
+      'What would you like to do with the file?';
+
+  @override
+  String get backupSaveFile => 'Save file';
+
+  @override
+  String get backupShareFile => 'Share file';
+
+  @override
+  String get backupPrint => 'Print PDF';
+
+  @override
+  String get backupExportFailed =>
+      'The export could not be completed. No data was shared.';
+
+  @override
+  String get backupReauthenticate =>
+      'Confirm your identity before exporting vault data.';
+
+  @override
+  String get reauthenticateToExport =>
+      'Confirm your identity to export vault data.';
+
+  @override
+  String get reauthenticationExportReason =>
+      'Confirm that you want to export Llavero data.';
+
+  @override
+  String get reauthenticateToReplace =>
+      'Confirm your identity to replace the current vault.';
+
+  @override
+  String get reauthenticationReplaceReason =>
+      'Confirm that you want to replace all vault data.';
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../core/app_scope.dart';
 import '../../core/widgets/empty_state.dart';
 import '../../data/models/entry.dart';
+import '../security/reauthentication_dialog.dart';
 import '../../l10n/generated/app_localizations.dart';
 
 class TrashScreen extends StatefulWidget {
@@ -154,9 +155,14 @@ class _TrashScreenState extends State<TrashScreen> {
   }
 
   Future<bool> _reauthenticate() async {
+    final strings = AppLocalizations.of(context);
     return await showDialog<bool>(
           context: context,
-          builder: (_) => _ReauthenticationDialog(controllers: _controllers),
+          builder: (_) => ReauthenticationDialog(
+            controllers: _controllers,
+            prompt: strings.reauthenticateToDelete,
+            reason: strings.reauthenticationReason,
+          ),
         ) ??
         false;
   }
@@ -217,120 +223,5 @@ class _TrashEntryCard extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _ReauthenticationDialog extends StatefulWidget {
-  const _ReauthenticationDialog({required this.controllers});
-
-  final AppControllers controllers;
-
-  @override
-  State<_ReauthenticationDialog> createState() =>
-      _ReauthenticationDialogState();
-}
-
-class _ReauthenticationDialogState extends State<_ReauthenticationDialog> {
-  final TextEditingController _pinController = TextEditingController();
-  String? _errorMessage;
-  bool _isBusy = false;
-
-  @override
-  void dispose() {
-    _pinController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final strings = AppLocalizations.of(context);
-    return AlertDialog(
-      title: Text(strings.reauthenticateTitle),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(strings.reauthenticateToDelete),
-            const SizedBox(height: 16),
-            TextField(
-              key: const ValueKey('reauthenticate-pin-field'),
-              controller: _pinController,
-              obscureText: true,
-              keyboardType: TextInputType.number,
-              maxLength: 8,
-              decoration: InputDecoration(
-                labelText: strings.reauthenticatePin,
-                errorText: _errorMessage,
-              ),
-            ),
-            if (widget.controllers.lock.biometricsEnabled)
-              TextButton.icon(
-                key: const ValueKey('reauthenticate-biometrics'),
-                onPressed: _isBusy ? null : _authenticateWithBiometrics,
-                icon: const Icon(Icons.fingerprint_rounded),
-                label: Text(strings.reauthenticateWithBiometrics),
-              ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: _isBusy ? null : () => Navigator.pop(context, false),
-          child: Text(strings.cancel),
-        ),
-        FilledButton(
-          key: const ValueKey('confirm-reauthentication'),
-          onPressed: _isBusy ? null : _authenticateWithPin,
-          child: _isBusy
-              ? const SizedBox.square(
-                  dimension: 18,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : Text(strings.confirm),
-        ),
-      ],
-    );
-  }
-
-  Future<void> _authenticateWithPin() {
-    final pin = _pinController.text;
-    return _runAuthentication(
-      () => widget.controllers.lock.reauthenticateWithPin(pin),
-    );
-  }
-
-  Future<void> _authenticateWithBiometrics() {
-    final strings = AppLocalizations.of(context);
-    return _runAuthentication(
-      () => widget.controllers.lock.reauthenticateWithBiometrics(
-        reason: strings.reauthenticationReason,
-      ),
-    );
-  }
-
-  Future<void> _runAuthentication(Future<bool> Function() authenticate) async {
-    setState(() => _isBusy = true);
-    try {
-      if (await authenticate()) {
-        if (mounted) {
-          Navigator.pop(context, true);
-        }
-      } else if (mounted) {
-        setState(() {
-          _errorMessage = AppLocalizations.of(context).reauthenticationFailed;
-        });
-      }
-    } on Object {
-      if (mounted) {
-        setState(() {
-          _errorMessage = AppLocalizations.of(context).reauthenticationFailed;
-        });
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isBusy = false);
-      }
-    }
   }
 }

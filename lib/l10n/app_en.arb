@@ -180,9 +180,79 @@
   "reauthenticateTitle": "Confirm your identity",
   "reauthenticateToDelete": "Enter your Llavero PIN to permanently delete this entry.",
   "reauthenticatePin": "Llavero PIN",
-  "reauthenticationFailed": "Incorrect PIN or active lockout. Nothing was deleted.",
+  "reauthenticationFailed": "Incorrect PIN or active lockout. No action was completed.",
   "reauthenticateWithBiometrics": "Use biometrics",
   "reauthenticationReason": "Confirm that you want to permanently delete an entry.",
+  "backupCenterTitle": "Backups and exports",
+  "backupReminderTitle": "Create a backup",
+  "backupReminderDescription": "No encrypted backup has been completed in the last 30 days.",
+  "backupEncryptedTitle": "Encrypted backup",
+  "backupEncryptedDescription": "Protect a complete copy with a password separate from your PIN.",
+  "backupCreateEncrypted": "Create encrypted backup",
+  "backupImportButton": "Import backup",
+  "backupPlainTextTitle": "Plain-text export",
+  "backupPlainTextDescription": "CSV and JSON include the values of your secrets.",
+  "backupExportJson": "Export JSON",
+  "backupExportCsv": "Export CSV",
+  "backupEmergencySheetTitle": "Family emergency sheet",
+  "backupEmergencyDescription": "Select which entries to include in the PDF.",
+  "backupSelectEntries": "Entries to include",
+  "backupGeneratePdf": "Prepare PDF",
+  "backupNoEntries": "There are no entries available to include.",
+  "backupPasswordTitle": "Backup password",
+  "backupPasswordHint": "Use a password different from your Llavero PIN and keep it separate.",
+  "backupPasswordImportTitle": "Open encrypted backup",
+  "backupPasswordImportHint": "Enter the password used to create this backup.",
+  "backupPasswordLabel": "Backup password",
+  "backupPasswordConfirmLabel": "Confirm password",
+  "backupPasswordTooShort": "Use at least 12 characters.",
+  "backupPasswordMismatch": "The passwords do not match.",
+  "backupOpenBackup": "Open backup",
+  "backupImportPreviewTitle": "Backup contents",
+  "backupImportPreview": "This backup contains {entryCount, plural, =1{1 entry} other{{entryCount} entries}} and {categoryCount, plural, =1{1 custom category} other{{categoryCount} custom categories}}.",
+  "backupMerge": "Merge",
+  "backupReplace": "Replace vault",
+  "backupReplaceConfirmationTitle": "Replace the vault?",
+  "backupReplaceConfirmationMessage": "All current entries and categories will be replaced. This cannot be undone.",
+  "backupReplacePhraseLabel": "Type {phrase} to confirm",
+  "backupReplacePhrase": "REPLACE",
+  "backupImportInvalid": "The backup could not be opened. Check the password and file.",
+  "backupImportCompleted": "Backup entries were merged.",
+  "backupReplaceCompleted": "The vault was replaced with the backup.",
+  "backupExportCompleted": "The encrypted backup was saved or shared.",
+  "fileExportCompleted": "The file was saved or shared.",
+  "plainExportWarningTitle": "Export unencrypted secrets",
+  "plainExportWarning": "The file will contain your secrets in plain text.",
+  "plainExportWarningDetails": "Anyone with access to the file can read them. Share it only with a destination you trust.",
+  "pdfExportWarningTitle": "The PDF sheet contains secrets",
+  "pdfExportWarning": "Printing or sharing this sheet may expose every entry you select.",
+  "backupDestinationTitle": "What would you like to do with the file?",
+  "backupSaveFile": "Save file",
+  "backupShareFile": "Share file",
+  "backupPrint": "Print PDF",
+  "backupExportFailed": "The export could not be completed. No data was shared.",
+  "backupReauthenticate": "Confirm your identity before exporting vault data.",
+  "reauthenticateToExport": "Confirm your identity to export vault data.",
+  "reauthenticationExportReason": "Confirm that you want to export Llavero data.",
+  "reauthenticateToReplace": "Confirm your identity to replace the current vault.",
+  "reauthenticationReplaceReason": "Confirm that you want to replace all vault data.",
+  "@backupImportPreview": {
+    "placeholders": {
+      "entryCount": {
+        "type": "int"
+      },
+      "categoryCount": {
+        "type": "int"
+      }
+    }
+  },
+  "@backupReplacePhraseLabel": {
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
   "@generatorLength": {
     "placeholders": {
       "length": {

@@ -1181,7 +1181,7 @@ abstract class AppLocalizations {
   /// No description provided for @reauthenticationFailed.
   ///
   /// In en, this message translates to:
-  /// **'Incorrect PIN or active lockout. Nothing was deleted.'**
+  /// **'Incorrect PIN or active lockout. No action was completed.'**
   String get reauthenticationFailed;
 
   /// No description provided for @reauthenticateWithBiometrics.
@@ -1195,6 +1195,324 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm that you want to permanently delete an entry.'**
   String get reauthenticationReason;
+
+  /// No description provided for @backupCenterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups and exports'**
+  String get backupCenterTitle;
+
+  /// No description provided for @backupReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a backup'**
+  String get backupReminderTitle;
+
+  /// No description provided for @backupReminderDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'No encrypted backup has been completed in the last 30 days.'**
+  String get backupReminderDescription;
+
+  /// No description provided for @backupEncryptedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup'**
+  String get backupEncryptedTitle;
+
+  /// No description provided for @backupEncryptedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect a complete copy with a password separate from your PIN.'**
+  String get backupEncryptedDescription;
+
+  /// No description provided for @backupCreateEncrypted.
+  ///
+  /// In en, this message translates to:
+  /// **'Create encrypted backup'**
+  String get backupCreateEncrypted;
+
+  /// No description provided for @backupImportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Import backup'**
+  String get backupImportButton;
+
+  /// No description provided for @backupPlainTextTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plain-text export'**
+  String get backupPlainTextTitle;
+
+  /// No description provided for @backupPlainTextDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV and JSON include the values of your secrets.'**
+  String get backupPlainTextDescription;
+
+  /// No description provided for @backupExportJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Export JSON'**
+  String get backupExportJson;
+
+  /// No description provided for @backupExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get backupExportCsv;
+
+  /// No description provided for @backupEmergencySheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Family emergency sheet'**
+  String get backupEmergencySheetTitle;
+
+  /// No description provided for @backupEmergencyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select which entries to include in the PDF.'**
+  String get backupEmergencyDescription;
+
+  /// No description provided for @backupSelectEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Entries to include'**
+  String get backupSelectEntries;
+
+  /// No description provided for @backupGeneratePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare PDF'**
+  String get backupGeneratePdf;
+
+  /// No description provided for @backupNoEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no entries available to include.'**
+  String get backupNoEntries;
+
+  /// No description provided for @backupPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup password'**
+  String get backupPasswordTitle;
+
+  /// No description provided for @backupPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a password different from your Llavero PIN and keep it separate.'**
+  String get backupPasswordHint;
+
+  /// No description provided for @backupPasswordImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open encrypted backup'**
+  String get backupPasswordImportTitle;
+
+  /// No description provided for @backupPasswordImportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the password used to create this backup.'**
+  String get backupPasswordImportHint;
+
+  /// No description provided for @backupPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup password'**
+  String get backupPasswordLabel;
+
+  /// No description provided for @backupPasswordConfirmLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get backupPasswordConfirmLabel;
+
+  /// No description provided for @backupPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 12 characters.'**
+  String get backupPasswordTooShort;
+
+  /// No description provided for @backupPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passwords do not match.'**
+  String get backupPasswordMismatch;
+
+  /// No description provided for @backupOpenBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Open backup'**
+  String get backupOpenBackup;
+
+  /// No description provided for @backupImportPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup contents'**
+  String get backupImportPreviewTitle;
+
+  /// No description provided for @backupImportPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup contains {entryCount, plural, =1{1 entry} other{{entryCount} entries}} and {categoryCount, plural, =1{1 custom category} other{{categoryCount} custom categories}}.'**
+  String backupImportPreview(int entryCount, int categoryCount);
+
+  /// No description provided for @backupMerge.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge'**
+  String get backupMerge;
+
+  /// No description provided for @backupReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace vault'**
+  String get backupReplace;
+
+  /// No description provided for @backupReplaceConfirmationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace the vault?'**
+  String get backupReplaceConfirmationTitle;
+
+  /// No description provided for @backupReplaceConfirmationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'All current entries and categories will be replaced. This cannot be undone.'**
+  String get backupReplaceConfirmationMessage;
+
+  /// No description provided for @backupReplacePhraseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Type {phrase} to confirm'**
+  String backupReplacePhraseLabel(String phrase);
+
+  /// No description provided for @backupReplacePhrase.
+  ///
+  /// In en, this message translates to:
+  /// **'REPLACE'**
+  String get backupReplacePhrase;
+
+  /// No description provided for @backupImportInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'The backup could not be opened. Check the password and file.'**
+  String get backupImportInvalid;
+
+  /// No description provided for @backupImportCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup entries were merged.'**
+  String get backupImportCompleted;
+
+  /// No description provided for @backupReplaceCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'The vault was replaced with the backup.'**
+  String get backupReplaceCompleted;
+
+  /// No description provided for @backupExportCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'The encrypted backup was saved or shared.'**
+  String get backupExportCompleted;
+
+  /// No description provided for @fileExportCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'The file was saved or shared.'**
+  String get fileExportCompleted;
+
+  /// No description provided for @plainExportWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export unencrypted secrets'**
+  String get plainExportWarningTitle;
+
+  /// No description provided for @plainExportWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The file will contain your secrets in plain text.'**
+  String get plainExportWarning;
+
+  /// No description provided for @plainExportWarningDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Anyone with access to the file can read them. Share it only with a destination you trust.'**
+  String get plainExportWarningDetails;
+
+  /// No description provided for @pdfExportWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The PDF sheet contains secrets'**
+  String get pdfExportWarningTitle;
+
+  /// No description provided for @pdfExportWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Printing or sharing this sheet may expose every entry you select.'**
+  String get pdfExportWarning;
+
+  /// No description provided for @backupDestinationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to do with the file?'**
+  String get backupDestinationTitle;
+
+  /// No description provided for @backupSaveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Save file'**
+  String get backupSaveFile;
+
+  /// No description provided for @backupShareFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Share file'**
+  String get backupShareFile;
+
+  /// No description provided for @backupPrint.
+  ///
+  /// In en, this message translates to:
+  /// **'Print PDF'**
+  String get backupPrint;
+
+  /// No description provided for @backupExportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The export could not be completed. No data was shared.'**
+  String get backupExportFailed;
+
+  /// No description provided for @backupReauthenticate.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your identity before exporting vault data.'**
+  String get backupReauthenticate;
+
+  /// No description provided for @reauthenticateToExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your identity to export vault data.'**
+  String get reauthenticateToExport;
+
+  /// No description provided for @reauthenticationExportReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that you want to export Llavero data.'**
+  String get reauthenticationExportReason;
+
+  /// No description provided for @reauthenticateToReplace.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your identity to replace the current vault.'**
+  String get reauthenticateToReplace;
+
+  /// No description provided for @reauthenticationReplaceReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm that you want to replace all vault data.'**
+  String get reauthenticationReplaceReason;
 }
 
 class _AppLocalizationsDelegate

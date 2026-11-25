@@ -9,6 +9,7 @@ import 'features/home/home_screen.dart';
 import 'features/lock/lock_screen.dart';
 import 'features/onboarding/onboarding_screen.dart';
 import 'features/entry/entry_detail_screen.dart';
+import 'features/backup/export_import_screen.dart';
 import 'features/trash/trash_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 
@@ -117,6 +118,11 @@ class _LlaveroAppState extends State<LlaveroApp> {
         return MaterialPageRoute<void>(
           settings: settings,
           builder: (_) => const TrashScreen(),
+        );
+      case AppRoutes.exportImport:
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: (_) => const ExportImportScreen(),
         );
       default:
         return null;
