@@ -89,6 +89,19 @@ class VaultStorage {
     }
   }
 
+  /// Removes the encrypted vault and any unfinished atomic-write file.
+  Future<void> delete() async {
+    final directory = _directory ?? await getApplicationSupportDirectory();
+    final file = File('${directory.path}/$fileName');
+    final temporaryFile = File('${file.path}.tmp');
+    if (await file.exists()) {
+      await file.delete();
+    }
+    if (await temporaryFile.exists()) {
+      await temporaryFile.delete();
+    }
+  }
+
   Future<File> _vaultFile({required bool createDirectory}) async {
     final directory = _directory ?? await getApplicationSupportDirectory();
     if (createDirectory) {

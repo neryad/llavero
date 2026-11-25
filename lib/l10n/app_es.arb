@@ -2,5 +2,85 @@
   "@@locale": "es",
   "appTitle": "Llavero",
   "placeholderTitle": "Tu espacio privado",
-  "placeholderMessage": "Todo offline, todo tuyo"
+  "placeholderMessage": "Todo offline, todo tuyo",
+  "loading": "Cargando tu bóveda privada…",
+  "startupFailed": "No se pudo abrir la bóveda. Reinicia la aplicación.",
+  "welcomeTitle": "Bienvenido a Llavero",
+  "welcomeMessage": "Una bóveda privada para guardar lo que tu familia necesita recordar.",
+  "welcomeTagline": "Todo offline, todo tuyo",
+  "languagePickerTitle": "Elige un idioma",
+  "languageEnglish": "English",
+  "languageSpanish": "Español",
+  "stepWelcome": "Bienvenida",
+  "stepHowItWorks": "Cómo funciona",
+  "stepCreatePin": "Crea un PIN",
+  "stepSecurity": "Tu seguridad",
+  "howTitle": "Así funciona Llavero",
+  "howOfflineTitle": "Siempre sin conexión",
+  "howOfflineDescription": "Tu bóveda permanece en este dispositivo. Llavero no se conecta a internet.",
+  "howEncryptionTitle": "Cifrado en este dispositivo",
+  "howEncryptionDescription": "Tus entradas están cifradas y solo se abren con tu PIN o la biometría que habilites.",
+  "howExportTitle": "Tú controlas las exportaciones",
+  "howExportDescription": "Nada se comparte a menos que decidas exportarlo.",
+  "next": "Siguiente",
+  "back": "Atrás",
+  "pinCreateTitle": "Crea un PIN de 6 dígitos",
+  "pinCreateDescription": "Elige un PIN que recuerdes. Evita dígitos repetidos o consecutivos.",
+  "pinConfirmTitle": "Confirma tu PIN",
+  "pinConfirmDescription": "Vuelve a escribir los mismos seis dígitos.",
+  "pinStrengthHint": "Usa seis dígitos que no sean repetidos ni consecutivos.",
+  "pinTooEasy": "Ese PIN es fácil de adivinar. Elige otro.",
+  "pinMismatch": "Los PIN no coinciden. Empieza de nuevo.",
+  "pinContinue": "Continuar",
+  "pinConfirmButton": "Confirmar PIN",
+  "deleteDigit": "Borrar último dígito",
+  "biometricTitle": "¿Activar biometría?",
+  "biometricDescription": "Usa la biometría de tu dispositivo para desbloquear más rápido. Tu PIN de Llavero siempre será la alternativa.",
+  "biometricSwitchTitle": "Desbloquear con biometría",
+  "biometricNotAvailable": "La biometría no está disponible en este dispositivo.",
+  "noPinRecovery": "No se puede recuperar un PIN olvidado.",
+  "forgotPinWarning": "Llavero no puede restablecer ni recuperar tu PIN. Guarda una copia cifrada.",
+  "backupRecommendation": "Te recomendamos crear tu primera copia cuando la exportación esté disponible.",
+  "createFirstEntry": "Crear mi primera entrada",
+  "lockTitle": "Llavero está bloqueado",
+  "lockPinPrompt": "Introduce tu PIN de 6 dígitos",
+  "pinDigitsEntered": "{count} de 6 dígitos introducidos",
+  "wrongPin": "Ese PIN no es correcto.",
+  "lockoutCountdown": "{seconds, plural, =1{Inténtalo de nuevo en 1 segundo.} other{Inténtalo de nuevo en {seconds} segundos.}}",
+  "unlockBiometrics": "Desbloquear con biometría",
+  "forgotPin": "¿Olvidaste tu PIN?",
+  "eraseEverything": "Borrar todo",
+  "eraseDialogTitle": "¿Borrar la bóveda?",
+  "eraseDialogMessage": "Se eliminarán permanentemente la bóveda cifrada, sus claves y todas las entradas. Esta acción no se puede deshacer.",
+  "eraseTypePrompt": "Escribe {phrase} para confirmar.",
+  "eraseConfirmationPhrase": "BORRAR TODO",
+  "eraseContinue": "Continuar",
+  "cancel": "Cancelar",
+  "eraseDeviceReason": "Confirma que quieres borrar la bóveda de Llavero.",
+  "erasePinFallbackTitle": "Introduce tu PIN de Llavero",
+  "erasePinFallbackDescription": "La autenticación del dispositivo no se completó. Usa el PIN de la bóveda para continuar.",
+  "erasePinIncorrect": "El PIN no es correcto o hay un bloqueo activo. No se borró nada.",
+  "biometricUnlockFailed": "No se completó el desbloqueo biométrico. Usa tu PIN.",
+  "vaultCreationFailed": "No se pudo crear la bóveda. Inténtalo de nuevo.",
+  "@pinDigitsEntered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@lockoutCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "@eraseTypePrompt": {
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  }
 }

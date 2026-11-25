@@ -66,4 +66,26 @@ La fase 2 se completó tras recibir la indicación «continue».
 2. Ejecuta `flutter run` en Android o iOS para comprobar que la aplicación sigue iniciando; todavía mostrará el placeholder porque las pantallas de entradas llegan en fases posteriores.
 3. La prueba interactiva de crear y editar entradas en el teléfono queda pendiente hasta que exista la interfaz.
 
-La fase 4 no comienza hasta recibir la indicación «continue».
+## Fase 4: onboarding, PIN y pantalla bloqueada — completada
+
+- Añadidos el onboarding de cuatro pasos, selector ES/EN persistente, alta y confirmación de PIN de seis dígitos, y aviso de que un PIN olvidado no se puede recuperar.
+- `LockController` ahora crea la bóveda con el DEK protegido por PIN, desbloquea con PIN o biometría y mantiene el lockout persistente tras intentos incorrectos.
+- La biometría es opcional: se guarda una copia del DEK protegida por Android Keystore/biometría o Keychain; el PIN sigue disponible como alternativa.
+- La pantalla de bloqueo aparece al abrir una bóveda existente. El borrado desde esa pantalla exige la autenticación del dispositivo o el PIN de Llavero y una frase de confirmación; fallar o cancelar la biometría no borra los datos.
+- Android usa `FlutterFragmentActivity` y declara `USE_BIOMETRIC`; iOS incluye el permiso de Face ID localizado en español e inglés.
+
+### Verificación
+
+- `flutter analyze` sin incidencias y `flutter test` con 48 pruebas aprobadas.
+- `flutter build apk --debug` y `flutter build ios --no-codesign` completados.
+- Las pruebas de controlador cubren alta, desbloqueo PIN/biometría, lockout, fallback, borrado del archivo cifrado y prevención de borrados concurrentes.
+- La interacción biométrica del sistema no se probó manualmente en un dispositivo; aquí se validó con dobles de prueba y compilaciones nativas.
+
+### Cómo probarla
+
+1. Ejecuta `flutter run` en Android o iOS; el primer inicio debe mostrar cuatro pasos de bienvenida, funcionamiento offline, creación/confirmación de PIN y seguridad.
+2. Crea un PIN de seis dígitos que no sea repetido ni secuencial; si el dispositivo ofrece biometría, actívala y termina. En un emulador, registra una huella o rostro primero. La pantalla inicial de entradas todavía se implementa en la fase 5.
+3. Cierra y vuelve a abrir la aplicación: debe aparecer la pantalla bloqueada. Prueba el PIN, cinco intentos incorrectos para ver el lockout y, si está activada, la biometría con fallback al PIN.
+4. En «¿Olvidaste tu PIN?», escribe «BORRAR TODO» y cancela o falla la biometría: la bóveda no debe borrarse; el borrado solo continúa con biometría del dispositivo o con el PIN correcto de Llavero.
+
+La fase 5 no comienza hasta recibir la indicación «continue».
