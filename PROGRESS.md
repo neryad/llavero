@@ -44,4 +44,26 @@ La fase 1 se completó tras recibir la indicación «continue».
 2. Ejecuta `flutter test` para verificar el cifrado, la detección de alteraciones, el almacenamiento de metadata, la validación del PIN y el lockout.
 3. En Android o iOS la aplicación aún muestra la pantalla inicial de la fase 1; la prueba manual de la interfaz de seguridad queda pendiente hasta conectarla en la fase 4.
 
-La fase 3 no comienza hasta recibir la indicación «continue».
+La fase 2 se completó tras recibir la indicación «continue».
+
+## Fase 3: archivo cifrado, modelos y entradas — completada
+
+- Añadidos `VaultEntry` y `EntryField`, con tipos de campo, serialización manual, copias inmutables y soporte de papelera.
+- Añadido `VaultStorage`, que guarda el vault en el directorio privado de la aplicación como un único archivo cifrado con AES-256-GCM y escritura atómica.
+- En iOS, Application Support se excluye de los backups de iCloud durante el inicio; la aplicación no continúa si no puede aplicar esta protección.
+- `EntriesController` ahora carga los datos al desbloquear, guarda cada cambio antes de notificar y elimina los datos descifrados de memoria al bloquear.
+- Añadidas altas, edición, papelera, restauración y borrado permanente; las operaciones se serializan para evitar perder cambios simultáneos.
+- Añadidas las dependencias permitidas `path_provider` y `uuid`.
+
+### Verificación
+
+- `flutter analyze` sin incidencias.
+- `flutter test` con 35 pruebas aprobadas, incluidas pruebas de persistencia, contenido cifrado, alteraciones y operaciones del controlador.
+
+### Cómo probarla
+
+1. Ejecuta `flutter test` para verificar el cifrado del archivo, la restauración de entradas, el bloqueo en memoria, las operaciones de papelera y las escrituras simultáneas.
+2. Ejecuta `flutter run` en Android o iOS para comprobar que la aplicación sigue iniciando; todavía mostrará el placeholder porque las pantallas de entradas llegan en fases posteriores.
+3. La prueba interactiva de crear y editar entradas en el teléfono queda pendiente hasta que exista la interfaz.
+
+La fase 4 no comienza hasta recibir la indicación «continue».
