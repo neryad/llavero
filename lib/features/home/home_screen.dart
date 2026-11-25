@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/app_routes.dart';
 import '../../core/app_scope.dart';
+import '../../core/utils/app_motion.dart';
 import '../../core/utils/entry_search.dart';
 import '../../core/widgets/category_chip.dart';
 import '../../core/widgets/empty_state.dart';
@@ -135,31 +136,50 @@ class _HomeScreenState extends State<HomeScreen> {
                         categories: categories,
                         people: people,
                       ),
-                      if (matchingEntries.isEmpty)
-                        EmptyState(
-                          key: const ValueKey('empty-search-results'),
-                          icon: Icons.search_off_rounded,
-                          title: strings.noSearchResults,
-                          message: '',
-                        )
-                      else ...[
-                        if (favorites.isNotEmpty) ...[
-                          SectionHeader(
-                            title: strings.favoritesSection,
-                            count: favorites.length,
-                          ),
-                          ...favorites.map(
-                            (entry) => _buildEntryCard(entry, controllers),
-                          ),
-                        ],
-                        SectionHeader(
-                          title: strings.allEntriesSection,
-                          count: matchingEntries.length,
+                      AnimatedSwitcher(
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 220),
                         ),
-                        ...matchingEntries.map(
-                          (entry) => _buildEntryCard(entry, controllers),
-                        ),
-                      ],
+                        switchInCurve: Curves.easeOutCubic,
+                        switchOutCurve: Curves.easeInCubic,
+                        transitionBuilder: (child, animation) =>
+                            FadeTransition(opacity: animation, child: child),
+                        child: matchingEntries.isEmpty
+                            ? EmptyState(
+                                key: const ValueKey('empty-search-results'),
+                                icon: Icons.search_off_rounded,
+                                title: strings.noSearchResults,
+                                message: strings.noSearchResultsMessage,
+                                actionLabel: strings.clearSearchAndFilters,
+                                actionIcon: Icons.filter_alt_off_rounded,
+                                onAction: _clearSearchAndFilters,
+                              )
+                            : Column(
+                                key: const ValueKey('entry-results'),
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  if (favorites.isNotEmpty) ...[
+                                    SectionHeader(
+                                      title: strings.favoritesSection,
+                                      count: favorites.length,
+                                    ),
+                                    ...favorites.map(
+                                      (entry) =>
+                                          _buildEntryCard(entry, controllers),
+                                    ),
+                                  ],
+                                  SectionHeader(
+                                    title: strings.allEntriesSection,
+                                    count: matchingEntries.length,
+                                  ),
+                                  ...matchingEntries.map(
+                                    (entry) =>
+                                        _buildEntryCard(entry, controllers),
+                                  ),
+                                ],
+                              ),
+                      ),
                     ],
                   ],
                 );
@@ -175,6 +195,15 @@ class _HomeScreenState extends State<HomeScreen> {
         label: Text(strings.addEntryButton),
       ),
     );
+  }
+
+  void _clearSearchAndFilters() {
+    _searchController.clear();
+    setState(() {
+      _query = '';
+      _selectedCategory = null;
+      _selectedPerson = null;
+    });
   }
 
   Widget _buildFilterSection({

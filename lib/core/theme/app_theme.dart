@@ -10,7 +10,7 @@ abstract final class AppTheme {
   static const _lightPrimary = Color(0xFF2F5D62);
   static const _lightAccent = Color(0xFFE0A458);
   static const _lightText = Color(0xFF1B2B2E);
-  static const _lightSecondaryText = Color(0xFF5F7175);
+  static const _lightSecondaryText = Color(0xFF536467);
   static const _lightOutline = Color(0xFFD5D0C5);
   static const _lightSuccess = Color(0xFF4C8C6B);
   static const _lightError = Color(0xFFC8553D);
@@ -38,7 +38,7 @@ abstract final class AppTheme {
     secondaryText: _lightSecondaryText,
     outline: _lightOutline,
     success: _lightSuccess,
-    onSuccess: _lightSurface,
+    onSuccess: const Color(0xFF000000),
     error: _lightError,
     categoryColors: const CategoryColors(
       wifi: Color(0xFF3E8FB0),
@@ -115,7 +115,7 @@ abstract final class AppTheme {
           outline: outline,
           error: error,
           onError: brightness == Brightness.light
-              ? const Color(0xFFFFFFFF)
+              ? const Color(0xFF000000)
               : const Color(0xFF2A1B00),
         );
 

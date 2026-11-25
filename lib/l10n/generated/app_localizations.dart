@@ -524,6 +524,18 @@ abstract class AppLocalizations {
   /// **'No entries found'**
   String get noSearchResults;
 
+  /// No description provided for @noSearchResultsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Try different terms or clear your search and filters.'**
+  String get noSearchResultsMessage;
+
+  /// No description provided for @clearSearchAndFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search and filters'**
+  String get clearSearchAndFilters;
+
   /// No description provided for @addEntryButton.
   ///
   /// In en, this message translates to:

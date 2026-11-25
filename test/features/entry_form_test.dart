@@ -11,6 +11,20 @@ import '../support/memory_secure_value_store.dart';
 import '../support/memory_vault_storage.dart';
 
 void main() {
+  testWidgets('keeps form content within tablet width', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(1200, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await _pumpForm(tester);
+
+    final formContent = find.byKey(const ValueKey('entry-form-content'));
+    expect(formContent, findsOneWidget);
+    expect(tester.getSize(formContent).width, lessThanOrEqualTo(720));
+  });
+
   testWidgets('a Wi-Fi template creates localized editable fields', (
     WidgetTester tester,
   ) async {

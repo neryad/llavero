@@ -41,7 +41,7 @@ class CategoryChip extends StatelessWidget {
       selectedColor: color.withValues(alpha: 0.2),
       side: BorderSide(color: selected ? color : theme.colorScheme.outline),
       labelStyle: theme.textTheme.labelLarge?.copyWith(
-        color: selected ? color : theme.colorScheme.onSurface,
+        color: theme.colorScheme.onSurface,
       ),
     );
   }

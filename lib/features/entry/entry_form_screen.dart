@@ -118,105 +118,117 @@ class _EntryFormScreenState extends State<EntryFormScreen> {
         ),
         body: existingEntryNotFound
             ? Center(child: Text(strings.startupFailed))
-            : Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextFormField(
-                          key: const ValueKey('entry-title-field'),
-                          controller: _titleController,
-                          textCapitalization: TextCapitalization.sentences,
-                          decoration: InputDecoration(
-                            labelText: strings.entryTitle,
-                            hintText: strings.entryTitleHint,
-                          ),
-                          validator: (value) => value?.trim().isNotEmpty == true
-                              ? null
-                              : strings.entryTitleRequired,
-                        ),
-                        const SizedBox(height: 16),
-                        DropdownButtonFormField<String>(
-                          key: const ValueKey('entry-category-field'),
-                          initialValue: _selectedCategory,
-                          decoration: InputDecoration(
-                            labelText: strings.entryCategory,
-                          ),
-                          items: _categoryOptions(strings)
-                              .map(
-                                (category) => DropdownMenuItem<String>(
-                                  value: category.id,
-                                  child: Text(category.name),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (category) {
-                            if (category != null) {
-                              _changeCategory(category, strings);
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        _buildPersonField(strings),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          key: const ValueKey('entry-notes-field'),
-                          controller: _notesController,
-                          minLines: 2,
-                          maxLines: 4,
-                          textCapitalization: TextCapitalization.sentences,
-                          decoration: InputDecoration(
-                            labelText: strings.entryNotes,
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Row(
+            : Center(
+                child: ConstrainedBox(
+                  key: const ValueKey('entry-form-content'),
+                  constraints: const BoxConstraints(maxWidth: 720),
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Expanded(
-                              child: Text(
-                                strings.entryFields,
-                                style: Theme.of(context).textTheme.titleLarge,
+                            TextFormField(
+                              key: const ValueKey('entry-title-field'),
+                              controller: _titleController,
+                              textCapitalization: TextCapitalization.sentences,
+                              decoration: InputDecoration(
+                                labelText: strings.entryTitle,
+                                hintText: strings.entryTitleHint,
+                              ),
+                              validator: (value) =>
+                                  value?.trim().isNotEmpty == true
+                                  ? null
+                                  : strings.entryTitleRequired,
+                            ),
+                            const SizedBox(height: 16),
+                            DropdownButtonFormField<String>(
+                              key: const ValueKey('entry-category-field'),
+                              initialValue: _selectedCategory,
+                              decoration: InputDecoration(
+                                labelText: strings.entryCategory,
+                              ),
+                              items: _categoryOptions(strings)
+                                  .map(
+                                    (category) => DropdownMenuItem<String>(
+                                      value: category.id,
+                                      child: Text(category.name),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (category) {
+                                if (category != null) {
+                                  _changeCategory(category, strings);
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            _buildPersonField(strings),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              key: const ValueKey('entry-notes-field'),
+                              controller: _notesController,
+                              minLines: 2,
+                              maxLines: 4,
+                              textCapitalization: TextCapitalization.sentences,
+                              decoration: InputDecoration(
+                                labelText: strings.entryNotes,
                               ),
                             ),
-                            TextButton.icon(
-                              key: const ValueKey('add-field-button'),
-                              onPressed: () =>
-                                  setState(() => _fields.add(_FieldDraft())),
-                              icon: const Icon(Icons.add_rounded),
-                              label: Text(strings.addField),
+                            const SizedBox(height: 24),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    strings.entryFields,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleLarge,
+                                  ),
+                                ),
+                                TextButton.icon(
+                                  key: const ValueKey('add-field-button'),
+                                  onPressed: () => setState(
+                                    () => _fields.add(_FieldDraft()),
+                                  ),
+                                  icon: const Icon(Icons.add_rounded),
+                                  label: Text(strings.addField),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            for (var index = 0; index < _fields.length; index++)
+                              _buildField(index, strings),
+                            if (_selectedCategory == 'streaming')
+                              _buildStreamingPreset(strings),
+                            const SizedBox(height: 16),
+                            OutlinedButton.icon(
+                              key: const ValueKey('create-category-button'),
+                              onPressed: _createCustomCategory,
+                              icon: const Icon(
+                                Icons.create_new_folder_outlined,
+                              ),
+                              label: Text(strings.addCustomCategory),
+                            ),
+                            const SizedBox(height: 24),
+                            FilledButton.icon(
+                              key: const ValueKey('save-entry-button'),
+                              onPressed: _saving ? null : _save,
+                              icon: _saving
+                                  ? const SizedBox.square(
+                                      dimension: 18,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : const Icon(Icons.check_rounded),
+                              label: Text(strings.saveEntry),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
-                        for (var index = 0; index < _fields.length; index++)
-                          _buildField(index, strings),
-                        if (_selectedCategory == 'streaming')
-                          _buildStreamingPreset(strings),
-                        const SizedBox(height: 16),
-                        OutlinedButton.icon(
-                          key: const ValueKey('create-category-button'),
-                          onPressed: _createCustomCategory,
-                          icon: const Icon(Icons.create_new_folder_outlined),
-                          label: Text(strings.addCustomCategory),
-                        ),
-                        const SizedBox(height: 24),
-                        FilledButton.icon(
-                          key: const ValueKey('save-entry-button'),
-                          onPressed: _saving ? null : _save,
-                          icon: _saving
-                              ? const SizedBox.square(
-                                  dimension: 18,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : const Icon(Icons.check_rounded),
-                          label: Text(strings.saveEntry),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

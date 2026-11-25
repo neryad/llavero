@@ -162,4 +162,29 @@ La fase 2 se completó tras recibir la indicación «continue».
 5. Abre Salud de seguridad y revisa los recuentos. Los valores secretos no deben aparecer en pantalla.
 6. Prueba en Android que las capturas estén bloqueadas. En iOS comprueba el desenfoque en el selector de aplicaciones y al iniciar una grabación; las capturas normales no se pueden deshabilitar mediante la API del sistema.
 
-La fase 7 queda completada; me detengo aquí y espero tu «continue» antes de iniciar la fase 8.
+La fase 7 queda completada.
+
+## Fase 8: pulido, adaptación y accesibilidad — completada
+
+- Se añadieron transiciones discretas que respetan la preferencia del sistema para reducir movimiento, además de una ilustración local para los estados vacíos y una acción para limpiar la búsqueda y los filtros.
+- Se limitó el escalado de texto a un máximo de 200 % y se centró el formulario con un ancho máximo de 720 dp para tabletas.
+- Se mejoró el contraste del texto secundario, los estados de éxito/error y las etiquetas de categorías seleccionadas en ambos temas; los botones de los estados vacíos mantienen objetivos táctiles de al menos 48 dp.
+- Se generaron iconos adaptativos y pantallas de inicio claras/oscuras para Android e iOS con recursos locales y herramientas de desarrollo permitidas.
+- Se añadieron textos ES/EN para los resultados de búsqueda vacíos; las 283 claves de ambos ARB coinciden.
+
+### Verificación
+
+- `flutter gen-l10n` completado; `flutter analyze` sin incidencias y `flutter test` con 131 pruebas aprobadas.
+- `flutter build apk --debug` y `flutter build ios --no-codesign` completados; la app iOS requiere firma manual antes de instalarse en un dispositivo.
+- Recursos de icono/splash revisados; `Info.plist` y el proyecto Xcode pasan `plutil -lint`.
+- No se hizo una revisión visual en un dispositivo físico ni en una tableta física; tamaños de 320 dp, 200 % de texto, contraste y límites de ancho se cubren con pruebas automatizadas.
+
+### Cómo probarla
+
+1. Ejecuta `flutter run` en Android o iOS y comprueba el icono de Llavero y la pantalla de inicio en tema claro y oscuro.
+2. Deja la bóveda vacía para ver la ilustración; crea entradas, filtra por persona y busca algo inexistente. «Limpiar búsqueda y filtros» debe mostrar de nuevo todas las entradas sin buscar valores secretos.
+3. Activa «Reducir movimiento» en el sistema y recorre el onboarding, la pantalla de inicio y la pantalla bloqueada; las animaciones deben desaparecer o reducirse sin retrasar el contenido.
+4. Configura texto al 200 % y prueba en un teléfono estrecho; luego abre un emulador de tableta y comprueba que el formulario no supera aproximadamente 720 dp.
+5. Revisa categorías seleccionadas, avisos de error y estados de éxito en los temas claro y oscuro; sus etiquetas deben seguir siendo legibles.
+
+La fase 8 queda completada; me detengo aquí y espero tu «continue» antes de iniciar la fase final.

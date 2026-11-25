@@ -71,6 +71,8 @@
   "emptyVaultTitle": "Your vault starts here",
   "emptyVaultMessage": "Add your first entry to keep what your family needs to remember close at hand.",
   "noSearchResults": "No entries found",
+  "noSearchResultsMessage": "Try different terms or clear your search and filters.",
+  "clearSearchAndFilters": "Clear search and filters",
   "addEntryButton": "Add entry",
   "trash": "Trash",
   "categoryWifi": "Wi-Fi",

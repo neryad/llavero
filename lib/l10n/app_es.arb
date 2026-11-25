@@ -71,6 +71,8 @@
   "emptyVaultTitle": "Tu bóveda empieza aquí",
   "emptyVaultMessage": "Añade la primera entrada para tener a mano lo que tu familia necesita recordar.",
   "noSearchResults": "No se encontraron entradas",
+  "noSearchResultsMessage": "Prueba con otros términos o limpia la búsqueda y los filtros.",
+  "clearSearchAndFilters": "Limpiar búsqueda y filtros",
   "addEntryButton": "Añadir entrada",
   "trash": "Papelera",
   "categoryWifi": "Wi-Fi",

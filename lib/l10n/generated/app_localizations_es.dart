@@ -255,6 +255,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noSearchResults => 'No se encontraron entradas';
 
   @override
+  String get noSearchResultsMessage =>
+      'Prueba con otros términos o limpia la búsqueda y los filtros.';
+
+  @override
+  String get clearSearchAndFilters => 'Limpiar búsqueda y filtros';
+
+  @override
   String get addEntryButton => 'Añadir entrada';
 
   @override

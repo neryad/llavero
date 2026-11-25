@@ -66,6 +66,26 @@ void main() {
     expect(theme.colorScheme.tertiary, const Color(0xFF7CC59B));
   });
 
+  testWidgets('caps scaling at 200 percent on a narrow phone layout', (
+    WidgetTester tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 740);
+    tester.view.devicePixelRatio = 1;
+    tester.platformDispatcher.textScaleFactorTestValue = 3;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    final controllers = AppControllers(secureValues: MemorySecureValueStore());
+    addTearDown(controllers.dispose);
+
+    await tester.pumpWidget(LlaveroApp(controllers: controllers));
+    await tester.pumpAndSettle();
+
+    final context = tester.element(find.text('Welcome to Llavero'));
+    expect(MediaQuery.textScalerOf(context).scale(16), 32);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('exposes shared controllers through AppScope', (
     WidgetTester tester,
   ) async {

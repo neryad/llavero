@@ -132,6 +132,15 @@ class _LlaveroAppState extends State<LlaveroApp> with WidgetsBindingObserver {
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: widget.themeMode ?? _themeModeFromSettings,
+          builder: (context, child) {
+            final mediaQuery = MediaQuery.of(context);
+            return MediaQuery(
+              data: mediaQuery.copyWith(
+                textScaler: mediaQuery.textScaler.clamp(maxScaleFactor: 2),
+              ),
+              child: child!,
+            );
+          },
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           onGenerateRoute: _onGenerateRoute,

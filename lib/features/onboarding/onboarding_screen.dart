@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/app_routes.dart';
 import '../../core/app_scope.dart';
 import '../../core/security/pin_validator.dart';
+import '../../core/utils/app_motion.dart';
 import '../../l10n/generated/app_localizations.dart';
 import 'pin_keypad.dart';
 
@@ -209,7 +210,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 280),
+                        duration: AppMotion.duration(
+                          context,
+                          const Duration(milliseconds: 280),
+                        ),
                         switchInCurve: Curves.easeOutCubic,
                         switchOutCurve: Curves.easeInCubic,
                         transitionBuilder: (child, animation) => FadeTransition(
@@ -243,7 +247,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       children: List<Widget>.generate(4, (index) {
         return Expanded(
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
+            duration: AppMotion.duration(
+              context,
+              const Duration(milliseconds: 200),
+            ),
             height: 4,
             margin: EdgeInsets.only(right: index == 3 ? 0 : 8),
             decoration: BoxDecoration(
