@@ -187,4 +187,25 @@ La fase 7 queda completada.
 4. Configura texto al 200 % y prueba en un teléfono estrecho; luego abre un emulador de tableta y comprueba que el formulario no supera aproximadamente 720 dp.
 5. Revisa categorías seleccionadas, avisos de error y estados de éxito en los temas claro y oscuro; sus etiquetas deben seguir siendo legibles.
 
-La fase 8 queda completada; me detengo aquí y espero tu «continue» antes de iniciar la fase final.
+La fase 8 queda completada.
+
+## Fase 9: cierre y documentación — completada
+
+- Se reemplazó el README de plantilla por instrucciones de instalación, ejecución y compilación, arquitectura, modelo de seguridad y formato de copias.
+- Se documentaron las limitaciones conocidas y los requisitos previos a distribución: firma nativa, identificadores de ejemplo, falta de pruebas completas en dispositivos físicos y límites de protección de capturas en iOS.
+- Se explicaron la política offline, el cifrado de la bóveda y los backups, el comportamiento de las exportaciones legibles y la falta de recuperación del PIN.
+
+### Verificación
+
+- `flutter analyze`: sin incidencias.
+- `flutter test`: 131 pruebas aprobadas.
+- `git diff --check`: correcto.
+- Durante la validación de la fase 8, `flutter build apk --debug` y `flutter build ios --no-codesign` completaron correctamente; iOS requiere firma manual para instalarse en un dispositivo.
+
+### Cómo probarla
+
+1. Sigue la sección de instalación y ejecución de `README.md` para iniciar la app en un emulador Android o iOS.
+2. Ejecuta `flutter analyze` y `flutter test` para verificar el análisis y las pruebas automatizadas.
+3. Antes de distribuir, revisa las limitaciones de `README.md`, configura los identificadores y la firma de producción, y completa las pruebas manuales en dispositivos físicos.
+
+La fase final queda completada; los requisitos previos a distribución y las validaciones manuales pendientes están enumerados en `README.md`.
